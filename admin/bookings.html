@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookings · AeroBook Admin</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="admin" data-page="bookings" data-base="../" data-title="Bookings">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>Bookings</h1>
+            <p>Seat utilisation per flight and all bookings, filterable by flight, date range and route.</p>
+          </div>
+          <div class="actions"><button class="btn btn-outline" data-toast="Bookings exported to bookings-2026-10-21.xlsx"><i data-lucide="file-spreadsheet" class="icon-sm"></i>Export</button></div>
+        </div>
+
+        <section class="grid grid-3" id="occupancy-cards"></section>
+
+        <section class="section card">
+          <div class="filter-bar">
+            <div class="field narrow"><label for="b-flight">Flight</label><select class="select" id="b-flight"><option value="">All flights</option></select></div>
+            <div class="field narrow"><label for="b-route">Route</label><select class="select" id="b-route"><option value="">All routes</option></select></div>
+            <div class="field narrow"><label for="b-from">From date</label><input class="input" type="date" id="b-from" value="2026-10-21"></div>
+            <div class="field narrow"><label for="b-to">To date</label><input class="input" type="date" id="b-to" value="2026-10-31"></div>
+            <div class="field"><label for="b-q">Passenger or reference</label><div class="input-icon"><i data-lucide="search"></i><input class="input" id="b-q" placeholder="e.g. K7M2QX or Hussam"></div></div>
+            <button class="btn btn-ghost" id="b-reset"><i data-lucide="rotate-ccw" class="icon-sm"></i>Reset</button>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Reference</th><th>Passenger</th><th>Flight</th><th>Route</th><th>Date</th><th>Fare</th><th>Seat</th><th class="num">Total</th><th>Status</th></tr></thead>
+              <tbody id="booking-rows"></tbody>
+            </table>
+          </div>
+          <div class="card-footer" style="justify-content:space-between">
+            <span class="text-sm text-3" id="b-count"></span>
+            <div class="flex gap-2"><button class="btn btn-outline btn-sm" disabled>Previous</button><button class="btn btn-outline btn-sm">Next</button></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/admin-bookings.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fares & Promotions · AeroBook Admin</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="admin" data-page="pricing" data-base="../" data-title="Fares & Promotions">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>Fares & promotions</h1>
+            <p>Define fare classes per cabin and manage promotional codes.</p>
+          </div>
+        </div>
+
+        <div class="alert alert-info mb-4">
+          <i data-lucide="shield-check"></i>
+          <div><strong>Paid bookings are price-protected</strong>Changes to fares, taxes or rules apply to new bookings only. Bookings already paid keep the price and rules at time of purchase.</div>
+        </div>
+
+        <div class="card">
+          <div class="tabs" role="tablist" aria-label="Pricing sections">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="p-fares" id="t-fares"><i data-lucide="layers" class="icon-sm"></i>Fare classes</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="p-promos" id="t-promos" tabindex="-1"><i data-lucide="ticket-percent" class="icon-sm"></i>Promo codes</button>
+          </div>
+
+          <!-- Fare classes -->
+          <div class="tab-panel" role="tabpanel" id="p-fares" aria-labelledby="t-fares">
+            <div class="flex justify-between items-center flex-wrap gap-3 mb-4">
+              <div class="segmented" role="group" aria-label="Filter by cabin" id="cabin-filter">
+                <button type="button" aria-pressed="true" data-cabin="">All cabins</button>
+                <button type="button" aria-pressed="false" data-cabin="Business">Business</button>
+                <button type="button" aria-pressed="false" data-cabin="Premium Economy">Premium</button>
+                <button type="button" aria-pressed="false" data-cabin="Economy">Economy</button>
+              </div>
+              <button class="btn btn-primary" data-open-modal="fare-modal"><i data-lucide="plus" class="icon-sm"></i>New fare class</button>
+            </div>
+            <div class="table-wrap" style="border:1px solid var(--c-border);border-radius:var(--radius)">
+              <table class="table">
+                <thead><tr><th>Fare class</th><th>Cabin</th><th class="num">Base fare</th><th class="num">Taxes</th><th>Baggage</th><th>Change rule</th><th>Refund rule</th><th class="num">Actions</th></tr></thead>
+                <tbody id="fare-rows"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Promo codes -->
+          <div class="tab-panel" role="tabpanel" id="p-promos" aria-labelledby="t-promos" hidden>
+            <div class="flex justify-between items-center flex-wrap gap-3 mb-4">
+              <p class="text-sm text-2">Codes are rejected at checkout if expired, fully used, or not valid for the selected route.</p>
+              <button class="btn btn-primary" data-open-modal="promo-modal"><i data-lucide="plus" class="icon-sm"></i>New promo code</button>
+            </div>
+            <div class="table-wrap" style="border:1px solid var(--c-border);border-radius:var(--radius)">
+              <table class="table">
+                <thead><tr><th>Code</th><th>Discount</th><th>Validity</th><th>Eligible routes</th><th style="min-width:160px">Uses</th><th>Status</th><th class="num">Actions</th></tr></thead>
+                <tbody id="promo-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Fare class modal -->
+  <dialog class="modal" id="fare-modal" aria-labelledby="fare-title">
+    <div class="modal-header"><div><h3 id="fare-title">Fare class</h3><p>Pricing, allowance and rules for one fare in a cabin.</p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label for="fc-name">Fare name <span class="req">*</span></label><input class="input" id="fc-name" placeholder="Economy Classic"></div>
+        <div class="field"><label for="fc-code">Booking code <span class="req">*</span></label><input class="input mono" id="fc-code" maxlength="1" placeholder="M"></div>
+        <div class="field"><label for="fc-cabin">Cabin</label><select class="select" id="fc-cabin"><option>Economy</option><option>Premium Economy</option><option>Business</option></select></div>
+        <div class="field"><label for="fc-bags">Baggage allowance</label><select class="select" id="fc-bags"><option>Cabin bag only</option><option>1 × 23 kg</option><option>2 × 23 kg</option><option>2 × 32 kg</option></select></div>
+        <div class="field"><label for="fc-base">Base fare (USD) <span class="req">*</span></label><input class="input num" id="fc-base" type="number" min="0" placeholder="289"></div>
+        <div class="field"><label for="fc-tax">Taxes & fees (USD)</label><input class="input num" id="fc-tax" type="number" min="0" placeholder="74"></div>
+        <div class="field"><label for="fc-change">Change fee</label><select class="select" id="fc-change"><option>Free</option><option>$50</option><option>$75</option><option>$90</option><option>Not allowed</option></select><span class="hint">Plus any fare difference.</span></div>
+        <div class="field"><label for="fc-refund">Refund rule</label><select class="select" id="fc-refund"><option>Full refund</option><option>$100 fee</option><option>$150 fee</option><option>50% refund</option><option>Non-refundable</option></select></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" data-close-modal>Cancel</button><button class="btn btn-primary" data-close-modal data-toast="Fare class saved — applies to new bookings only">Save fare class</button></div>
+  </dialog>
+
+  <!-- Promo modal -->
+  <dialog class="modal" id="promo-modal" aria-labelledby="promo-title">
+    <div class="modal-header"><div><h3 id="promo-title">New promo code</h3><p>Set the discount, validity window, routes and usage limit.</p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button></div>
+    <div class="modal-body stack">
+      <div class="form-grid">
+        <div class="field"><label for="pc-code">Code <span class="req">*</span></label><input class="input mono" id="pc-code" placeholder="WINTER20" style="text-transform:uppercase"></div>
+        <div class="field"><span class="field-label">Discount type</span>
+          <div class="segmented" role="group" aria-label="Discount type">
+            <button type="button" aria-pressed="true"><i data-lucide="percent" class="icon-sm"></i>Percentage</button>
+            <button type="button" aria-pressed="false"><i data-lucide="dollar-sign" class="icon-sm"></i>Fixed amount</button>
+          </div></div>
+        <div class="field"><label for="pc-val">Discount value <span class="req">*</span></label><input class="input num" id="pc-val" type="number" min="1" placeholder="20"></div>
+        <div class="field"><label for="pc-max">Maximum uses <span class="req">*</span></label><input class="input num" id="pc-max" type="number" min="1" placeholder="500"></div>
+        <div class="field"><label for="pc-from">Valid from</label><input class="input" id="pc-from" type="date" value="2026-11-01"></div>
+        <div class="field"><label for="pc-to">Valid until</label><input class="input" id="pc-to" type="date" value="2027-01-31"></div>
+        <div class="field full"><label for="pc-routes">Eligible routes</label>
+          <select class="select" id="pc-routes"><option>All routes</option><option>CAI–DXB, DXB–CAI</option><option>Europe (LHR, CDG, FRA)</option><option>Gulf (DXB, JED, RUH)</option><option>CAI–JFK</option></select>
+          <span class="hint">Customers will see “This code isn't valid for your route” on ineligible searches.</span></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" data-close-modal>Cancel</button><button class="btn btn-primary" data-close-modal data-toast="Promo code created">Create code</button></div>
+  </dialog>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/admin-pricing.js"></script>
+</body>
+</html>

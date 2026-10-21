@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports · AeroBook Admin</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="admin" data-page="reports" data-base="../" data-title="Reports">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>Reports</h1>
+            <p>Revenue and route popularity analysis. Export any report as a printable PDF or an Excel spreadsheet.</p>
+          </div>
+          <div class="actions no-print">
+            <button class="btn btn-outline" data-print><i data-lucide="printer" class="icon-sm"></i>Print / PDF</button>
+            <button class="btn btn-primary" data-toast="Report exported to aerobook-report.xlsx"><i data-lucide="file-spreadsheet" class="icon-sm"></i>Export to Excel</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tabs no-print" role="tablist" aria-label="Report type">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="r-revenue" id="t-revenue"><i data-lucide="dollar-sign" class="icon-sm"></i>Revenue</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="r-popularity" id="t-popularity" tabindex="-1"><i data-lucide="trophy" class="icon-sm"></i>Route popularity</button>
+          </div>
+
+          <!-- Revenue -->
+          <div class="tab-panel" role="tabpanel" id="r-revenue" aria-labelledby="t-revenue">
+            <div class="flex flex-wrap gap-3 items-end mb-4 no-print">
+              <div class="field" style="min-width:180px"><label for="r-group">Group by</label>
+                <select class="select" id="r-group"><option value="route">Route</option><option value="flight">Flight</option><option value="fare">Fare class</option></select></div>
+              <div class="field"><span class="field-label">Period</span>
+                <div class="segmented" role="group" aria-label="Period">
+                  <button type="button" aria-pressed="false">Day</button>
+                  <button type="button" aria-pressed="true">Month</button>
+                  <button type="button" aria-pressed="false">Quarter</button>
+                </div></div>
+              <div class="field" style="min-width:160px"><label for="r-from">From</label><input class="input" type="date" id="r-from" value="2025-11-01"></div>
+              <div class="field" style="min-width:160px"><label for="r-to">To</label><input class="input" type="date" id="r-to" value="2026-10-21"></div>
+            </div>
+
+            <div class="grid grid-4 mb-4">
+              <div class="card stat"><div class="stat-top">Total revenue</div><div class="stat-value">$28.56M</div><div class="stat-delta up"><i data-lucide="trending-up" class="icon-sm"></i>+9.1% YoY</div></div>
+              <div class="card stat"><div class="stat-top">Passengers</div><div class="stat-value">108,190</div><div class="stat-delta up"><i data-lucide="trending-up" class="icon-sm"></i>+5.3% YoY</div></div>
+              <div class="card stat"><div class="stat-top">Average fare</div><div class="stat-value">$264</div><div class="stat-delta">Across all cabins</div></div>
+              <div class="card stat"><div class="stat-top">Ancillary revenue</div><div class="stat-value">$2.41M</div><div class="stat-delta">Seats, bags, priority</div></div>
+            </div>
+
+            <div class="grid grid-split">
+              <div class="card card-body">
+                <h3 class="mb-4">Revenue by month <span class="text-sm text-3 fw-500">· USD millions</span></h3>
+                <div id="rev-chart"></div>
+              </div>
+              <div class="card card-body">
+                <h3 class="mb-4">Revenue by cabin</h3>
+                <div class="stack">
+                  <div><div class="flex justify-between text-sm"><span>Economy</span><span class="num fw-600">$17.4M · 61%</span></div><div class="progress mt-1"><span style="width:61%"></span></div></div>
+                  <div><div class="flex justify-between text-sm"><span>Business</span><span class="num fw-600">$8.9M · 31%</span></div><div class="progress mt-1"><span style="width:31%"></span></div></div>
+                  <div><div class="flex justify-between text-sm"><span>Premium economy</span><span class="num fw-600">$2.3M · 8%</span></div><div class="progress mt-1"><span style="width:8%"></span></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-wrap mt-6" style="border:1px solid var(--c-border);border-radius:var(--radius)">
+              <table class="table">
+                <thead id="rev-head"></thead>
+                <tbody id="rev-rows"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Route popularity -->
+          <div class="tab-panel" role="tabpanel" id="r-popularity" aria-labelledby="t-popularity" hidden>
+            <div class="flex flex-wrap gap-3 items-end mb-6 no-print">
+              <div class="field" style="min-width:200px"><label for="p-period">Period</label>
+                <select class="select" id="p-period"><option>Last 30 days</option><option selected>Last 90 days</option><option>Q3 2026</option><option>Year to date</option></select></div>
+            </div>
+            <div class="grid grid-split">
+              <div class="card card-body">
+                <h3 class="mb-4">Routes ranked by passengers carried</h3>
+                <div class="hbar-list" id="pop-bars"></div>
+              </div>
+              <div class="card card-body">
+                <h3 class="mb-4">Highlights</h3>
+                <div class="stack text-sm">
+                  <div class="flex gap-3"><span class="stat-icon"><i data-lucide="trophy"></i></span><div><strong>CAI → HRG</strong><p class="text-3">Most passengers carried · 21,870</p></div></div>
+                  <div class="flex gap-3"><span class="stat-icon"><i data-lucide="dollar-sign"></i></span><div><strong>CAI → LHR</strong><p class="text-3">Highest revenue · $7.48M</p></div></div>
+                  <div class="flex gap-3"><span class="stat-icon"><i data-lucide="trending-down"></i></span><div><strong>CAI → JFK</strong><p class="text-3">Fewest passengers carried · 6,588</p></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="table-wrap mt-6" style="border:1px solid var(--c-border);border-radius:var(--radius)">
+              <table class="table">
+                <thead><tr><th>Rank</th><th>Route</th><th class="num">Flights</th><th class="num">Passengers</th><th class="num">Revenue</th></tr></thead>
+                <tbody id="pop-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/admin-reports.js"></script>
+</body>
+</html>

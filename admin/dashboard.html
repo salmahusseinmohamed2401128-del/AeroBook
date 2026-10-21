@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard · AeroBook Admin</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="admin" data-page="dashboard" data-base="../" data-title="Dashboard">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>Good afternoon, Jana</h1>
+            <p>Network overview for Wednesday, 21 October 2026.</p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-outline" href="reports.html"><i data-lucide="file-chart-column" class="icon-sm"></i>Reports</a>
+            <a class="btn btn-primary" href="flights.html?new=1"><i data-lucide="plus" class="icon-sm"></i>New flight</a>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="card stat">
+            <div class="stat-top">Revenue (Oct, to date)<span class="stat-icon"><i data-lucide="dollar-sign"></i></span></div>
+            <div class="stat-value">$2.19M</div>
+            <div class="stat-delta up"><i data-lucide="trending-up" class="icon-sm"></i>+6.4% vs Oct 2025</div>
+          </div>
+          <div class="card stat">
+            <div class="stat-top">Bookings today<span class="stat-icon"><i data-lucide="ticket"></i></span></div>
+            <div class="stat-value">1,284</div>
+            <div class="stat-delta up"><i data-lucide="trending-up" class="icon-sm"></i>+112 vs yesterday</div>
+          </div>
+          <div class="card stat">
+            <div class="stat-top">Passengers booked<span class="stat-icon"><i data-lucide="users"></i></span></div>
+            <div class="stat-value">1,170</div>
+            <div class="stat-delta">Across the 8 flights below</div>
+          </div>
+          <div class="card stat">
+            <div class="stat-top">Disruptions today<span class="stat-icon"><i data-lucide="triangle-alert"></i></span></div>
+            <div class="stat-value">3</div>
+            <div class="stat-delta">1 cancelled · 1 delayed · 1 gate change</div>
+          </div>
+        </div>
+
+        <section class="section grid grid-split">
+          <div class="card">
+            <div class="card-header"><div><h3>Monthly revenue</h3><p>Last 12 months · USD millions</p></div>
+              <a class="btn btn-ghost btn-sm" href="reports.html">Details<i data-lucide="arrow-right" class="icon-sm"></i></a></div>
+            <div class="card-body"><div id="rev-chart"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div><h3>Top routes</h3><p>Passengers carried, last 90 days</p></div></div>
+            <div class="card-body"><div class="hbar-list" id="top-routes"></div></div>
+          </div>
+        </section>
+
+        <section class="section card">
+          <div class="card-header">
+            <div><h3>Today's flights — seats overview</h3><p>Total seats, seats booked and passengers checked in per flight.</p></div>
+            <div class="legend"><span><i style="background:var(--c-success)"></i>Checked in</span><span><i style="background:var(--c-secondary)"></i>Booked</span><span><i style="background:var(--c-muted)"></i>Available</span></div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Flight</th><th>Route</th><th>Departure</th><th class="num">Total</th><th class="num">Booked</th><th class="num">Checked in</th><th style="min-width:180px">Occupancy</th><th>Status</th></tr></thead>
+              <tbody id="flights-today"></tbody>
+            </table>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage Flights · AeroBook Admin</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="admin" data-page="flights" data-base="../" data-title="Manage Flights">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>Manage flights</h1>
+            <p>Create, edit and cancel scheduled flights. Every change is logged with your admin ID.</p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-outline" href="change-log.html"><i data-lucide="history" class="icon-sm"></i>Change log</a>
+            <button class="btn btn-primary" id="new-flight-btn"><i data-lucide="plus" class="icon-sm"></i>New flight</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="filter-bar">
+            <div class="field"><label for="f-q">Search</label>
+              <div class="input-icon"><i data-lucide="search"></i><input class="input" id="f-q" placeholder="Flight number, airport…"></div></div>
+            <div class="field narrow"><label for="f-status">Status</label>
+              <select class="select" id="f-status"><option value="">All statuses</option><option>On time</option><option>Delayed</option><option>Boarding</option><option>Gate changed</option><option>Departed</option><option>Arrived</option><option>Cancelled</option></select></div>
+            <div class="field narrow"><label for="f-aircraft">Aircraft</label>
+              <select class="select" id="f-aircraft"><option value="">All aircraft</option></select></div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Flight</th><th>Route</th><th>Departure</th><th>Arrival</th><th>Aircraft</th><th class="num">Seats</th><th>Status</th><th class="num">Actions</th></tr></thead>
+              <tbody id="flight-rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Create / edit flight -->
+  <dialog class="modal modal-lg" id="flight-modal" aria-labelledby="fm-title">
+    <form method="dialog" id="flight-form" novalidate style="display:contents">
+      <div class="modal-header">
+        <div><h3 id="fm-title">Create flight</h3><p id="fm-sub">Define the route, schedule, aircraft and cabin configuration.</p></div>
+        <button type="button" class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body stack-lg">
+        <div class="alert alert-warning" id="edit-impact" hidden>
+          <i data-lucide="bell-ring"></i>
+          <div><strong>This flight has <span id="impact-count">0</span> bookings</strong>Changing time, aircraft or route will notify all affected passengers within 5 minutes.</div>
+        </div>
+
+        <fieldset class="fieldset">
+          <legend class="fw-600 mb-4">Route & schedule</legend>
+          <div class="form-grid form-grid-3">
+            <div class="field"><label for="fm-no">Flight number <span class="req">*</span></label><input class="input mono" id="fm-no" placeholder="AB123" maxlength="6"></div>
+            <div class="field" id="fld-from"><label for="fm-from">Origin <span class="req">*</span></label><select class="select mono" id="fm-from"></select><span class="hint">3-letter IATA code</span></div>
+            <div class="field" id="fld-to"><label for="fm-to">Destination <span class="req">*</span></label><select class="select mono" id="fm-to"></select>
+              <span class="error-msg"><i data-lucide="circle-alert" class="icon-sm"></i>Destination must be different from origin.</span></div>
+            <div class="field"><label for="fm-dep">Departure (local) <span class="req">*</span></label><input class="input" id="fm-dep" type="datetime-local"></div>
+            <div class="field" id="fld-arr"><label for="fm-arr">Arrival (local) <span class="req">*</span></label><input class="input" id="fm-arr" type="datetime-local">
+              <span class="error-msg"><i data-lucide="circle-alert" class="icon-sm"></i>Arrival must be after departure.</span></div>
+            <div class="field" id="fld-ac"><label for="fm-ac">Aircraft <span class="req">*</span></label><select class="select" id="fm-ac"></select>
+              <span class="error-msg"><i data-lucide="circle-alert" class="icon-sm"></i><span id="ac-msg">Aircraft already assigned to an overlapping flight.</span></span></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend class="fw-600 mb-4">Seat map & capacity per cabin</legend>
+          <div class="form-grid form-grid-4">
+            <div class="field"><label for="fm-map">Seat map template</label><select class="select" id="fm-map"><option>A320 · 2-2 / 3-3</option><option>B738 · 2-2 / 3-3</option><option>B789 · 1-2-1 / 2-3-2 / 3-3-3</option><option>A321 · 2-2 / 3-3</option></select></div>
+            <div class="field"><label for="cap-j">Business</label><input class="input num" id="cap-j" type="number" min="0" value="12"></div>
+            <div class="field"><label for="cap-w">Premium economy</label><input class="input num" id="cap-w" type="number" min="0" value="0"></div>
+            <div class="field"><label for="cap-y">Economy</label><input class="input num" id="cap-y" type="number" min="0" value="150"></div>
+          </div>
+          <p class="text-sm text-3 mt-2">Total capacity: <strong class="num" id="cap-total">162</strong> seats</p>
+        </fieldset>
+
+        <div class="alert alert-info"><i data-lucide="info"></i><div>This change will be recorded in the flight change log with admin ID <span class="mono">ADM-001</span>, timestamp, and old/new values.</div></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-close-modal>Cancel</button>
+        <button type="submit" class="btn btn-primary" id="fm-save">Create flight</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Cancel flight -->
+  <dialog class="modal modal-sm" id="cancel-modal" aria-labelledby="cm-title">
+    <div class="modal-header">
+      <div><h3 id="cm-title">Cancel flight <span class="mono" id="cm-no"></span>?</h3><p id="cm-route"></p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="modal-body stack">
+      <p class="text-sm text-2">The flight will be marked <strong>Cancelled</strong>. All <strong id="cm-pax">0</strong> booked passengers will be notified and offered:</p>
+      <ul class="text-sm stack-sm" style="padding-left:20px;margin:0">
+        <li>Free rebooking onto an alternative flight, or</li>
+        <li>A full refund to the original payment method.</li>
+      </ul>
+      <div class="field"><label for="cm-reason">Reason (internal)</label>
+        <select class="select" id="cm-reason"><option>Operational — aircraft unavailable</option><option>Weather</option><option>Crew availability</option><option>Low demand / consolidation</option><option>Other</option></select></div>
+      <label class="check"><input type="checkbox" id="cm-confirm"> I understand this cannot be undone.</label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" data-close-modal>Keep flight</button>
+      <button class="btn btn-danger" id="cm-go" disabled><i data-lucide="circle-x" class="icon-sm"></i>Cancel flight</button>
+    </div>
+  </dialog>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/admin-flights.js"></script>
+</body>
+</html>

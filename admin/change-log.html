@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flight Change Log · AeroBook Admin</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="admin" data-page="changelog" data-base="../" data-title="Flight Change Log">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+        <div class="page-header">
+          <div>
+            <h1>Flight change log</h1>
+            <p>An immutable record of every flight change: admin ID, timestamp, old and new values, and passengers notified.</p>
+          </div>
+          <div class="actions"><button class="btn btn-outline" data-toast="Change log exported to change-log.xlsx"><i data-lucide="download" class="icon-sm"></i>Export</button></div>
+        </div>
+
+        <div class="card">
+          <div class="filter-bar">
+            <div class="field narrow"><label for="l-flight">Flight</label><select class="select" id="l-flight"><option value="">All flights</option></select></div>
+            <div class="field narrow"><label for="l-admin">Admin ID</label><select class="select" id="l-admin"><option value="">All admins</option><option>ADM-001</option><option>ADM-002</option><option>ADM-003</option></select></div>
+            <div class="field narrow"><label for="l-field">Change type</label><select class="select" id="l-field"><option value="">All changes</option><option>Departure time</option><option>Status</option><option>Gate</option><option>Aircraft</option><option>Route</option><option>Created</option></select></div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Timestamp</th><th>Admin ID</th><th>Flight</th><th>Field</th><th>Old value</th><th>New value</th><th class="num">Notified</th></tr></thead>
+              <tbody id="log-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/admin-change-log.js"></script>
+</body>
+</html>
