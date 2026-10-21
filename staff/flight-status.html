@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Update Flight Status · AeroBook Staff</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body data-role="staff" data-page="status" data-base="../" data-title="Update Flight Status">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+        <div class="page-header">
+          <div>
+            <h1>Update flight status</h1>
+            <p>Status changes are published to the public flight-status page and sent to passengers by email, SMS and push within 2 minutes.</p>
+          </div>
+          <a class="btn btn-outline" href="../flight-status.html" target="_blank" rel="noopener"><i data-lucide="external-link" class="icon-sm"></i>Public status page</a>
+        </div>
+
+        <div class="card">
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Flight</th><th>Route</th><th>Scheduled</th><th>Gate</th><th class="num">Passengers</th><th>Current status</th><th class="num">Action</th></tr></thead>
+              <tbody id="status-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <dialog class="modal" id="status-modal" aria-labelledby="sm-title">
+    <div class="modal-header"><div><h3 id="sm-title">Update <span class="mono" id="sm-no"></span></h3><p id="sm-route"></p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button></div>
+    <div class="modal-body stack">
+      <fieldset class="fieldset">
+        <legend class="field-label mb-4">New status</legend>
+        <div class="option-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px" id="sm-options"></div>
+      </fieldset>
+      <div class="field" id="sm-delay" hidden><label for="sm-newtime">New departure time <span class="req">*</span></label><input class="input" type="datetime-local" id="sm-newtime"></div>
+      <div class="field" id="sm-gate" hidden><label for="sm-newgate">New gate <span class="req">*</span></label><input class="input mono" id="sm-newgate" placeholder="e.g. D9"></div>
+      <div class="field"><label for="sm-msg">Message to passengers (optional)</label><textarea class="textarea input" id="sm-msg" placeholder="We apologise for the inconvenience…"></textarea></div>
+      <div class="alert alert-info"><i data-lucide="send"></i><div><strong><span id="sm-pax">0</span> passengers will be notified</strong>
+        <span class="flex gap-2 flex-wrap mt-2"><span class="chip"><i data-lucide="mail" class="icon-sm"></i>Email</span><span class="chip"><i data-lucide="message-square-text" class="icon-sm"></i>SMS</span><span class="chip"><i data-lucide="smartphone" class="icon-sm"></i>Push</span></span></div></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" data-close-modal>Cancel</button><button class="btn btn-primary" id="sm-save">Publish update</button></div>
+  </dialog>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/staff-status.js"></script>
+</body>
+</html>

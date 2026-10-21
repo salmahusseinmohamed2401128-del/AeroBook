@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Baggage Handling · AeroBook Staff</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="staff" data-page="baggage" data-base="../" data-title="Baggage Handling">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>Baggage handling</h1>
+            <p>Register checked bags, calculate excess fees and record status at every point of the journey.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="align-items:start">
+          <!-- Register bag -->
+          <section class="card">
+            <div class="card-header"><div><h3>Register checked bag</h3><p>A unique 10-digit tag number is generated for each bag.</p></div></div>
+            <div class="card-body stack">
+              <div class="form-grid">
+                <div class="field"><label for="bg-ref">Booking reference</label><input class="input mono" id="bg-ref" value="P9D4LT"></div>
+                <div class="field"><label for="bg-pax">Passenger</label><input class="input" id="bg-pax" value="Nour Reda · AB205" readonly></div>
+                <div class="field"><label for="bg-pieces">Bag number</label><select class="select" id="bg-pieces"><option value="1">1 of 1</option><option value="2" selected>2 of 2</option><option value="3">3 of 3</option></select></div>
+                <div class="field"><label for="bg-weight">Weight (kg)</label><input class="input num" id="bg-weight" type="number" step="0.1" min="0" value="34.5"></div>
+              </div>
+
+              <div class="card card-body" style="background:var(--c-surface-2)">
+                <div class="flex justify-between items-center mb-4"><h4>Allowance check</h4><span class="badge badge-primary">Business Saver · 2 × 32 kg</span></div>
+                <div class="summary-row"><span>Pieces</span><span id="ex-pieces" class="num">2 of 2 allowed</span></div>
+                <div class="summary-row"><span>Weight</span><span id="ex-weight" class="num">34.5 kg / 32 kg max</span></div>
+                <div class="summary-row"><span>Overweight fee (2.5 kg)</span><span id="ex-wfee" class="num">$40.00</span></div>
+                <div class="summary-row"><span>Extra piece fee</span><span id="ex-pfee" class="num">$0.00</span></div>
+                <div class="summary-row summary-total"><span>Excess baggage fee</span><span id="ex-total" class="num text-warning">$40.00</span></div>
+              </div>
+
+              <div class="alert alert-success" id="tag-out" hidden>
+                <i data-lucide="tag"></i>
+                <div><strong>Bag tag generated</strong><span class="mono text-lg fw-600" id="tag-no" style="letter-spacing:.1em;color:var(--c-text)">0157 2049 17</span></div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-outline" id="collect-fee"><i data-lucide="credit-card" class="icon-sm"></i>Collect fee</button>
+              <button class="btn btn-primary" id="gen-tag"><i data-lucide="printer" class="icon-sm"></i>Register & print tag</button>
+            </div>
+          </section>
+
+          <!-- Update status -->
+          <section class="card">
+            <div class="card-header"><div><h3>Update bag status</h3><p>Scan or type a tag, then record its status and location.</p></div></div>
+            <div class="card-body stack">
+              <div class="field"><label for="us-tag">Bag tag number</label><div class="input-icon"><i data-lucide="scan-barcode"></i><input class="input mono" id="us-tag" maxlength="10" inputmode="numeric" value="0157204382"></div></div>
+              <div class="field"><span class="field-label">New status</span>
+                <div class="segmented flex-wrap" role="group" aria-label="Bag status" style="display:flex">
+                  <button type="button" aria-pressed="false">Checked in</button>
+                  <button type="button" aria-pressed="true">Loaded</button>
+                  <button type="button" aria-pressed="false">Transferred</button>
+                  <button type="button" aria-pressed="false">Arrived</button>
+                  <button type="button" aria-pressed="false">Missing</button>
+                </div></div>
+              <div class="form-grid">
+                <div class="field"><label for="us-loc">Location</label><select class="select" id="us-loc"><option>CAI · T3 Baggage hall</option><option selected>CAI · Stand B12</option><option>CAI · Transfer belt 2</option><option>CAI · Arrival belt 5</option></select></div>
+                <div class="field"><label for="us-time">Time</label><input class="input" id="us-time" type="datetime-local" value="2026-10-22T07:52"></div>
+              </div>
+            </div>
+            <div class="card-footer"><button class="btn btn-primary" data-toast="Status recorded — passenger notified">Record status</button></div>
+          </section>
+        </div>
+
+        <section class="section card">
+          <div class="card-header"><div><h3>Bags in system</h3><p>Today's tagged bags with latest status, time and location.</p></div>
+            <div class="field" style="min-width:180px"><label class="sr-only" for="bf">Filter status</label><select class="select" id="bf"><option value="">All statuses</option><option>Checked in</option><option>Loaded</option><option>Transferred</option><option>Arrived</option><option>Missing</option></select></div></div>
+          <div class="table-wrap"><table class="table">
+            <thead><tr><th>Tag number</th><th>Passenger</th><th>Flight</th><th class="num">Weight</th><th>Last update</th><th>Location</th><th>Status</th></tr></thead>
+            <tbody id="bag-rows"></tbody></table></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/staff-baggage.js"></script>
+</body>
+</html>

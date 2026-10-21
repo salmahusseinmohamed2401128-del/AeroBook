@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seat Assignments · AeroBook Staff</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/seatmap.css">
+</head>
+<body data-role="staff" data-page="seats" data-base="../" data-title="Seat Assignments">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>Seat assignments</h1>
+            <p>Select a passenger on the map, then click any free seat to move them. Changes are visible to all users instantly.</p>
+          </div>
+          <div class="field" style="min-width:240px">
+            <label for="flight-sel">Flight</label>
+            <select class="select" id="flight-sel"><option>AB101 · CAI → DXB · 22 Oct 08:15</option><option>AB205 · CAI → LHR · 22 Oct 10:40</option><option>AB510 · CAI → IST · 22 Oct 17:45</option></select>
+          </div>
+        </div>
+
+        <div class="grid grid-aside">
+          <div class="card card-body">
+            <div class="seatmap-wrap">
+              <div id="legend"></div>
+              <div class="flex items-center gap-2 text-xs text-3"><span class="badge"><span class="dot" style="background:var(--c-accent)"></span>Orange underline = special service request</span><span class="badge badge-success"><span class="dot"></span>Live · synced</span></div>
+              <div id="seatmap"></div>
+            </div>
+          </div>
+
+          <aside class="stack sticky-aside">
+            <div class="card">
+              <div class="card-header"><h3>Selected passenger</h3></div>
+              <div class="card-body" id="sel-empty">
+                <div class="empty" style="padding:24px 8px"><span class="empty-icon"><i data-lucide="mouse-pointer-click"></i></span><p class="text-sm">Click an occupied seat with initials to select a passenger.</p></div>
+              </div>
+              <div class="card-body stack" id="sel-body" hidden>
+                <div class="flex items-center gap-3"><span class="avatar" id="sel-av">AS</span><div><div class="fw-600" id="sel-name"></div><div class="text-sm text-3"><span class="mono" id="sel-ref"></span> · Seat <span class="mono fw-600" id="sel-seat"></span></div></div></div>
+                <div id="sel-moving" class="alert alert-info" hidden><i data-lucide="move"></i><div>Now click a free seat to move this passenger.</div></div>
+                <div>
+                  <h4 class="text-sm mb-4">Special service requests</h4>
+                  <div class="stack-sm" id="ssr-list">
+                    <label class="check"><input type="checkbox" value="Wheelchair (WCHR)"> <i data-lucide="accessibility" class="icon-sm"></i>Wheelchair assistance</label>
+                    <label class="check"><input type="checkbox" value="Infant (INFT)"> <i data-lucide="baby" class="icon-sm"></i>Travelling with infant</label>
+                    <label class="check"><input type="checkbox" value="Unaccompanied minor (UMNR)"> <i data-lucide="user-round" class="icon-sm"></i>Unaccompanied minor</label>
+                    <label class="check"><input type="checkbox" value="Special meal (VGML)"> <i data-lucide="utensils" class="icon-sm"></i>Special meal</label>
+                  </div>
+                </div>
+                <div class="field"><label for="ssr-note">Notes</label><textarea class="textarea input" id="ssr-note" placeholder="e.g. Needs aisle seat, cabin crew to assist at boarding"></textarea></div>
+              </div>
+              <div class="card-footer" id="sel-foot" hidden><button class="btn btn-outline" id="ssr-save">Save requests</button></div>
+            </div>
+            <div class="alert alert-warning"><i data-lucide="shield-alert"></i><div><strong>Exit-row rule</strong>Infants and passengers needing assistance cannot be seated in rows 12–13.</div></div>
+          </aside>
+        </div>
+
+        <section class="section card">
+          <div class="card-header"><h3>Passengers with special service requests</h3></div>
+          <div class="table-wrap"><table class="table"><thead><tr><th>Seat</th><th>Passenger</th><th>Reference</th><th>Requests</th><th>Status</th></tr></thead><tbody id="ssr-rows"></tbody></table></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/seatmap.js"></script>
+  <script src="../js/pages/staff-seats.js"></script>
+</body>
+</html>

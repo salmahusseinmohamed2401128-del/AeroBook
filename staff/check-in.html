@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Passenger Check-in · AeroBook Staff</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body data-role="staff" data-page="checkin" data-base="../" data-title="Passenger Check-in">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header no-print">
+          <div>
+            <h1>Passenger check-in</h1>
+            <p>Counter 14 · Cairo Terminal 3. Find a booking, verify documents and issue the boarding pass.</p>
+          </div>
+        </div>
+
+        <div class="card no-print">
+          <div class="tabs" role="tablist" aria-label="Search by">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="s-ref" id="ts-ref"><i data-lucide="hash" class="icon-sm"></i>Booking reference</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="s-pass" id="ts-pass" tabindex="-1"><i data-lucide="book-user" class="icon-sm"></i>Passport number</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="s-name" id="ts-name" tabindex="-1"><i data-lucide="user-search" class="icon-sm"></i>Name & flight</button>
+          </div>
+          <form id="find-form" novalidate>
+            <div class="tab-panel" role="tabpanel" id="s-ref" aria-labelledby="ts-ref">
+              <div class="flex gap-2 items-end flex-wrap"><div class="field flex-1"><label for="q-ref">Booking reference</label><input class="input mono" id="q-ref" maxlength="6" placeholder="P9D4LT" style="text-transform:uppercase"></div><button class="btn btn-primary" type="submit"><i data-lucide="search" class="icon-sm"></i>Find</button></div>
+            </div>
+            <div class="tab-panel" role="tabpanel" id="s-pass" aria-labelledby="ts-pass" hidden>
+              <div class="flex gap-2 items-end flex-wrap"><div class="field flex-1"><label for="q-pass">Passport number</label><input class="input mono" id="q-pass" placeholder="A88213409"></div><button class="btn btn-primary" type="submit"><i data-lucide="scan-line" class="icon-sm"></i>Find</button></div>
+            </div>
+            <div class="tab-panel" role="tabpanel" id="s-name" aria-labelledby="ts-name" hidden>
+              <div class="flex gap-2 items-end flex-wrap"><div class="field flex-1"><label for="q-name">Passenger last name</label><input class="input" id="q-name" placeholder="Reda"></div>
+                <div class="field" style="min-width:180px"><label for="q-flight">Flight</label><select class="select" id="q-flight"></select></div><button class="btn btn-primary" type="submit"><i data-lucide="search" class="icon-sm"></i>Find</button></div>
+            </div>
+          </form>
+        </div>
+
+        <section class="section card no-print">
+          <div class="card-header"><div><h3>Matching bookings</h3><p id="match-sub">Recent bookings on today's departures</p></div></div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Reference</th><th>Passenger</th><th>Passport</th><th>Flight</th><th>Seat</th><th>Check-in</th><th class="num">Action</th></tr></thead>
+              <tbody id="match-rows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Passenger panel -->
+        <section class="section" id="pax-panel" hidden>
+          <div class="grid grid-aside">
+            <div class="card no-print">
+              <div class="card-header"><div><h3 id="pp-name">Nour Reda</h3><p id="pp-sub">P9D4LT · AB205 CAI → LHR · Business Saver</p></div><span id="pp-badge"></span></div>
+              <div class="card-body stack">
+                <div class="alert alert-warning" id="dup-alert" hidden>
+                  <i data-lucide="triangle-alert"></i>
+                  <div><strong>Already checked in online</strong>This passenger completed online check-in. Do not check in again — reprint the boarding pass if needed.</div>
+                </div>
+                <h4>Document verification</h4>
+                <div class="stack-sm" id="doc-checks">
+                  <label class="check"><input type="checkbox" class="doc-req"> Passport photo matches passenger</label>
+                  <label class="check"><input type="checkbox" class="doc-req"> Name matches booking: <strong id="pp-docname">REDA/NOUR</strong></label>
+                  <label class="check"><input type="checkbox" class="doc-req"> Passport <span class="mono" id="pp-passport">A88213409</span> valid ≥ 6 months (exp. 14 Mar 2031)</label>
+                  <label class="check"><input type="checkbox" class="doc-req"> Visa / entry requirements for destination met</label>
+                </div>
+                <div class="form-grid">
+                  <div class="field"><label for="pp-bags">Checked bags</label><select class="select" id="pp-bags"><option>0</option><option selected>1</option><option>2</option><option>3</option></select><span class="hint">Register bags in <a href="baggage.html">Baggage Handling</a>.</span></div>
+                  <div class="field"><label for="pp-ssr">Special service requests</label><input class="input" id="pp-ssr" value="None" readonly></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-outline" id="close-pax">Close</button>
+                <button class="btn btn-primary" id="do-checkin" disabled><i data-lucide="badge-check" class="icon-sm"></i>Mark checked in</button>
+                <button class="btn btn-outline" data-print id="print-bp" disabled><i data-lucide="printer" class="icon-sm"></i>Print boarding pass</button>
+              </div>
+            </div>
+
+            <aside>
+              <div class="boarding-pass" style="grid-template-columns:1fr" id="mini-bp">
+                <div class="bp-main">
+                  <div class="bp-head"><span class="brand"><span class="brand-mark"><i data-lucide="plane"></i></span>AeroBook</span><span class="text-xs" id="mbp-cabin">BUSINESS</span></div>
+                  <div class="bp-body">
+                    <div class="bp-route"><div><div class="code" id="mbp-from">CAI</div></div><div class="mid"><hr><i data-lucide="plane"></i><hr></div><div class="text-right"><div class="code" id="mbp-to">LHR</div></div></div>
+                    <div class="bp-fields" style="grid-template-columns:repeat(2,1fr)">
+                      <div><div class="lbl">Passenger</div><div class="val" style="font-size:14px" id="mbp-name">REDA/NOUR</div></div>
+                      <div><div class="lbl">Flight</div><div class="val" id="mbp-no">AB205</div></div>
+                      <div><div class="lbl">Seat</div><div class="val" id="mbp-seat">3A</div></div>
+                      <div><div class="lbl">Gate</div><div class="val" id="mbp-gate">F4</div></div>
+                    </div>
+                  </div>
+                  <div class="bp-barcode" id="mbp-barcode"></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/staff-checkin.js"></script>
+</body>
+</html>
