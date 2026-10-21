@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile & Alerts · AeroBook</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="passenger" data-page="profile" data-base="../" data-title="Profile & Alerts">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+        <div class="page-header">
+          <div>
+            <h1>Profile & alerts</h1>
+            <p>Manage your personal details, saved travel document and how we contact you.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="align-items:start">
+          <div class="stack">
+            <section class="card">
+              <div class="card-header"><h3>Personal details</h3><span class="badge badge-success"><i data-lucide="badge-check" class="icon-sm"></i>Verified</span></div>
+              <div class="card-body">
+                <div class="form-grid">
+                  <div class="field"><label for="pf-first">Given names</label><input class="input" id="pf-first" value="Jumana"></div>
+                  <div class="field"><label for="pf-last">Surname</label><input class="input" id="pf-last" value="Hussam"></div>
+                  <div class="field"><label for="pf-email">Email</label><input class="input" id="pf-email" type="email" value="passenger@aerobook.com"><span class="hint">Verified 03 Jan 2024</span></div>
+                  <div class="field"><label for="pf-phone">Mobile</label><input class="input" id="pf-phone" type="tel" value="+20 100 555 0199"><span class="hint">Verified by one-time code</span></div>
+                  <div class="field"><label for="pf-dob">Date of birth</label><input class="input" id="pf-dob" type="date" value="1991-04-17"></div>
+                  <div class="field"><label for="pf-nat">Nationality</label><select class="select" id="pf-nat"><option>Egyptian</option><option>Other</option></select></div>
+                </div>
+              </div>
+              <div class="card-footer"><button class="btn btn-primary" data-toast="Profile saved">Save changes</button></div>
+            </section>
+
+            <section class="card">
+              <div class="card-header"><h3>Saved passport</h3></div>
+              <div class="card-body form-grid">
+                <div class="field"><label for="pp-no">Passport number</label><input class="input mono" id="pp-no" value="A12345678"></div>
+                <div class="field"><label for="pp-exp">Expiry date</label><input class="input" id="pp-exp" type="date" value="2030-08-31"></div>
+              </div>
+              <div class="card-footer"><button class="btn btn-outline" data-toast="Passport details saved">Save passport</button></div>
+            </section>
+          </div>
+
+          <div class="stack">
+            <section class="card">
+              <div class="card-header"><div><h3>Notification channels</h3><p>Booking confirmations, flight status changes and bag updates.</p></div></div>
+              <div class="card-body stack">
+                <label class="switch justify-between w-full"><span class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="mail"></i></span><span><span class="fw-500">Email</span><span class="table-sub">passenger@aerobook.com</span></span></span><input type="checkbox" checked><span class="track"></span></label>
+                <label class="switch justify-between w-full"><span class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="message-square-text"></i></span><span><span class="fw-500">Text message (SMS)</span><span class="table-sub">+20 100 555 0199</span></span></span><input type="checkbox" checked><span class="track"></span></label>
+                <label class="switch justify-between w-full"><span class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="smartphone"></i></span><span><span class="fw-500">Push notifications</span><span class="table-sub">AeroBook app · Pixel 8</span></span></span><input type="checkbox"><span class="track"></span></label>
+                <div class="alert alert-info"><i data-lucide="info"></i><div>Flight status changes reach you within 2 minutes on every channel you enable.</div></div>
+              </div>
+              <div class="card-footer"><button class="btn btn-primary" data-toast="Notification preferences saved">Save preferences</button></div>
+            </section>
+
+            <section class="card">
+              <div class="card-header"><h3>Security</h3></div>
+              <div class="card-body stack-sm text-sm">
+                <div class="flex justify-between items-center"><div><div class="fw-500">Password</div><div class="text-3">Last changed 4 months ago</div></div><button class="btn btn-outline btn-sm" data-open-modal="pw-modal">Change</button></div>
+                <div class="divider"></div>
+                <div class="flex justify-between items-center"><div><div class="fw-500">Account lock protection</div><div class="text-3">Locked for 15 min after 5 failed sign-ins</div></div><span class="badge badge-success">On</span></div>
+                <div class="divider"></div>
+                <div class="flex justify-between items-center"><div><div class="fw-500">Active sessions</div><div class="text-3">Chrome on Linux · Cairo · now</div></div><button class="btn btn-ghost btn-sm" data-toast="Signed out of other sessions" data-toast-type="info">Sign out others</button></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+</body>
+</html>

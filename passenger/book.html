@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book Flight · AeroBook</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/seatmap.css">
+  <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body data-role="passenger" data-page="search" data-base="../" data-title="Book Flight">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <a href="search.html" class="text-sm"><i data-lucide="arrow-left" class="icon-sm" style="display:inline;vertical-align:-3px"></i> Back to results</a>
+            <h1 class="mt-2">Complete your booking</h1>
+            <div class="trip-strip mt-2">
+              <span><strong class="mono">AB101</strong></span>
+              <span><strong>Cairo (CAI) → Dubai (DXB)</strong></span>
+              <span>Thu, 22 Oct 2026 · 08:15 – 12:50</span>
+              <span>Economy Classic · 1 adult</span>
+            </div>
+          </div>
+          <div class="hold-timer" id="hold-timer" role="timer" aria-live="off" hidden>
+            <i data-lucide="timer" class="icon-sm"></i>Seat held for <span class="mono" id="hold-clock">15:00</span>
+          </div>
+        </div>
+
+        <ol class="stepper" id="stepper">
+          <li class="current"><button type="button" data-goto="1"><span class="n">1</span>Passengers</button></li>
+          <li><button type="button" data-goto="2"><span class="n">2</span>Seats</button></li>
+          <li><button type="button" data-goto="3"><span class="n">3</span>Meals & extras</button></li>
+          <li><button type="button" data-goto="4"><span class="n">4</span>Review & pay</button></li>
+          <li><button type="button" data-goto="5" disabled><span class="n">5</span>Confirmation</button></li>
+        </ol>
+
+        <div class="grid grid-aside">
+          <div>
+            <!-- STEP 1: Passenger details -->
+            <section class="card" data-step-panel="1">
+              <div class="card-header"><div><h3>Passenger details</h3><p>Enter names exactly as they appear in the passport.</p></div></div>
+              <div class="card-body stack-lg">
+                <div class="pax-tabs"><span class="chip"><i data-lucide="user" class="icon-sm"></i>Adult 1 · Primary contact</span></div>
+                <fieldset class="fieldset">
+                  <legend class="fw-600 mb-4">Personal information</legend>
+                  <div class="form-grid">
+                    <div class="field"><label for="p-first">Given names <span class="req">*</span></label><input class="input" id="p-first" value="Jumana" autocomplete="given-name"></div>
+                    <div class="field"><label for="p-last">Surname <span class="req">*</span></label><input class="input" id="p-last" value="Hussam" autocomplete="family-name"></div>
+                    <div class="field"><label for="p-dob">Date of birth <span class="req">*</span></label><input class="input" id="p-dob" type="date" value="1991-04-17" autocomplete="bday"></div>
+                    <div class="field"><label for="p-nat">Nationality <span class="req">*</span></label><select class="select" id="p-nat"><option selected>Egyptian</option><option>Emirati</option><option>Saudi</option><option>Jordanian</option><option>British</option><option>Other</option></select></div>
+                  </div>
+                </fieldset>
+                <fieldset class="fieldset">
+                  <legend class="fw-600 mb-2">Travel document</legend>
+                  <p class="text-sm text-3 mb-4">Required for international flights. Passport must be valid for 6 months after travel.</p>
+                  <div class="form-grid">
+                    <div class="field"><label for="p-pass">Passport number <span class="req">*</span></label><input class="input mono" id="p-pass" value="A12345678"></div>
+                    <div class="field"><label for="p-exp">Passport expiry <span class="req">*</span></label><input class="input" id="p-exp" type="date" value="2030-08-31"></div>
+                  </div>
+                </fieldset>
+                <fieldset class="fieldset">
+                  <legend class="fw-600 mb-4">Contact details</legend>
+                  <div class="form-grid">
+                    <div class="field"><label for="p-email">Email <span class="req">*</span></label><input class="input" id="p-email" type="email" value="passenger@aerobook.com" autocomplete="email"><span class="hint">Your e-ticket will be sent here.</span></div>
+                    <div class="field"><label for="p-phone">Mobile phone <span class="req">*</span></label><input class="input" id="p-phone" type="tel" value="+20 100 555 0199" autocomplete="tel"></div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="card-footer"><button class="btn btn-primary" data-next>Continue to seats<i data-lucide="arrow-right" class="icon-sm"></i></button></div>
+            </section>
+
+            <!-- STEP 2: Seats -->
+            <section class="card" data-step-panel="2" hidden>
+              <div class="card-header"><div><h3>Choose your seat</h3><p>Seats are held for 15 minutes while you complete payment, then released.</p></div>
+                <span class="badge badge-primary" id="seat-chosen">No seat selected</span></div>
+              <div class="card-body">
+                <div class="seatmap-wrap">
+                  <div id="legend"></div>
+                  <div id="seatmap"></div>
+                </div>
+              </div>
+              <div class="card-footer" style="justify-content:space-between">
+                <button class="btn btn-ghost" data-prev><i data-lucide="arrow-left" class="icon-sm"></i>Back</button>
+                <div class="flex gap-2"><button class="btn btn-outline" data-next data-skip-seat>Skip — assign at check-in</button><button class="btn btn-primary" data-next>Continue<i data-lucide="arrow-right" class="icon-sm"></i></button></div>
+              </div>
+            </section>
+
+            <!-- STEP 3: Extras -->
+            <section class="card" data-step-panel="3" hidden>
+              <div class="card-header"><div><h3>Meals & extra services</h3><p>Personalise your trip. You can change these later in Manage Booking.</p></div></div>
+              <div class="card-body stack-lg">
+                <fieldset class="fieldset">
+                  <legend class="fw-600 mb-4">Meal preference</legend>
+                  <div class="option-grid" id="meals"></div>
+                </fieldset>
+                <fieldset class="fieldset">
+                  <legend class="fw-600 mb-4">Extra services</legend>
+                  <div class="option-grid">
+                    <label class="option"><input type="checkbox" name="extra" value="bag" data-price="45"><span class="opt-body"><span class="opt-title"><i data-lucide="luggage" class="icon-sm"></i>Extra baggage</span><span class="opt-desc">+1 checked bag up to 23 kg</span><span class="opt-price">+$45</span></span></label>
+                    <label class="option"><input type="checkbox" name="extra" value="priority" data-price="15"><span class="opt-body"><span class="opt-title"><i data-lucide="zap" class="icon-sm"></i>Priority boarding</span><span class="opt-desc">Board first, settle in early</span><span class="opt-price">+$15</span></span></label>
+                    <label class="option"><input type="checkbox" name="extra" value="lounge" data-price="39"><span class="opt-body"><span class="opt-title"><i data-lucide="coffee" class="icon-sm"></i>Lounge access</span><span class="opt-desc">CAI Terminal 3 lounge</span><span class="opt-price">+$39</span></span></label>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="card-footer" style="justify-content:space-between">
+                <button class="btn btn-ghost" data-prev><i data-lucide="arrow-left" class="icon-sm"></i>Back</button>
+                <button class="btn btn-primary" data-next>Review & pay<i data-lucide="arrow-right" class="icon-sm"></i></button>
+              </div>
+            </section>
+
+            <!-- STEP 4: Review & pay -->
+            <section class="card" data-step-panel="4" hidden>
+              <div class="card-header"><div><h3>Payment</h3><p>Secured by our payment gateway. Your card is never stored by AeroBook.</p></div><i data-lucide="lock" class="text-3"></i></div>
+              <div class="card-body stack-lg">
+                <div class="segmented" role="group" aria-label="Payment method">
+                  <button type="button" aria-pressed="true"><i data-lucide="credit-card" class="icon-sm"></i>Card</button>
+                  <button type="button" aria-pressed="false"><i data-lucide="wallet" class="icon-sm"></i>Wallet</button>
+                  <button type="button" aria-pressed="false"><i data-lucide="landmark" class="icon-sm"></i>Bank transfer</button>
+                </div>
+                <div class="form-grid">
+                  <div class="field full"><label for="c-name">Name on card</label><input class="input" id="c-name" value="JUMANA HUSSAM" autocomplete="cc-name"></div>
+                  <div class="field full"><label for="c-num">Card number</label><div class="input-icon"><i data-lucide="credit-card"></i><input class="input mono" id="c-num" inputmode="numeric" value="4242 4242 4242 4242" autocomplete="cc-number"></div></div>
+                  <div class="field"><label for="c-exp">Expiry</label><input class="input mono" id="c-exp" placeholder="MM/YY" value="09/28" autocomplete="cc-exp"></div>
+                  <div class="field"><label for="c-cvc">CVC</label><input class="input mono" id="c-cvc" inputmode="numeric" maxlength="4" value="123" autocomplete="cc-csc"></div>
+                </div>
+                <label class="check"><input type="checkbox" checked> I accept the fare rules (Economy Classic: changes $90 + fare difference, 50% refund on cancellation) and the Conditions of Carriage.</label>
+              </div>
+              <div class="card-footer" style="justify-content:space-between">
+                <button class="btn btn-ghost" data-prev><i data-lucide="arrow-left" class="icon-sm"></i>Back</button>
+                <button class="btn btn-accent btn-lg" id="pay-btn"><i data-lucide="lock" class="icon-sm"></i>Pay <span id="pay-amount" class="num">$289</span></button>
+              </div>
+            </section>
+
+            <!-- STEP 5: Confirmation -->
+            <section class="card" data-step-panel="5" hidden>
+              <div class="confirm-hero">
+                <div class="ok"><i data-lucide="check" class="icon-lg"></i></div>
+                <h2>You're booked!</h2>
+                <p class="text-2 mt-2">A confirmation with your e-ticket has been sent to <strong>passenger@aerobook.com</strong>.</p>
+                <div class="ref-box">
+                  <div><div class="lbl">Booking reference</div><div class="val">K7M2QX</div></div>
+                  <div><div class="lbl">E-ticket number</div><div class="val">157-2400918264</div></div>
+                </div>
+                <div class="flex gap-2 justify-center flex-wrap mt-6">
+                  <button class="btn btn-outline" data-toast="E-ticket downloaded"><i data-lucide="download" class="icon-sm"></i>Download e-ticket</button>
+                  <a class="btn btn-outline" href="manage-booking.html?ref=K7M2QX"><i data-lucide="square-pen" class="icon-sm"></i>Manage booking</a>
+                  <a class="btn btn-primary" href="trips.html">Go to my trips</a>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Price summary -->
+          <aside class="card sticky-aside" aria-label="Price breakdown">
+            <div class="card-header"><h3>Price breakdown</h3><span class="text-xs text-3">USD</span></div>
+            <div class="card-body">
+              <div class="summary-row"><span>Fare (Economy Classic)</span><span class="num" id="sum-fare">$215.00</span></div>
+              <div class="summary-row"><span>Taxes & fees</span><span class="num">$74.00</span></div>
+              <div class="summary-row"><span>Seat <span class="mono" id="sum-seat-id"></span></span><span class="num" id="sum-seat">$0.00</span></div>
+              <div class="summary-row"><span>Extras</span><span class="num" id="sum-extras">$0.00</span></div>
+              <div class="summary-row text-success" id="sum-disc-row" hidden><span style="color:inherit">Discount <span class="mono" id="sum-code"></span></span><span class="num" id="sum-disc">−$0.00</span></div>
+              <div class="summary-row summary-total"><span>Total</span><span class="num" id="sum-total">$289.00</span></div>
+
+              <div class="divider"></div>
+              <div class="field" id="promo-field">
+                <label for="promo">Promo code</label>
+                <div class="flex gap-2"><input class="input mono" id="promo" placeholder="e.g. AUTUMN15" style="text-transform:uppercase"><button class="btn btn-outline" id="promo-apply">Apply</button></div>
+                <span class="error-msg" role="alert"><i data-lucide="circle-alert" class="icon-sm"></i><span id="promo-err"></span></span>
+                <span class="hint">Try AUTUMN15, DXB50, SUMMER25 (expired) or NYC100 (other route).</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <dialog class="modal modal-sm" id="paying-modal" aria-labelledby="paying-title">
+    <div class="modal-body text-center stack" style="padding:40px 24px">
+      <div class="stat-icon" style="margin:0 auto;width:56px;height:56px"><i data-lucide="loader-circle" class="icon-lg" style="animation:spin 1s linear infinite"></i></div>
+      <h3 id="paying-title">Processing payment…</h3>
+      <p class="text-sm text-3">Contacting the payment gateway. Please don't close this window.</p>
+    </div>
+  </dialog>
+  <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/seatmap.js"></script>
+  <script src="../js/pages/passenger-book.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage Booking · AeroBook</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/seatmap.css">
+  <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body data-role="passenger" data-page="manage" data-base="../" data-title="Manage Booking">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>Manage booking</h1>
+            <p>Change your flight, seat, meal or extras, or cancel and see your refund before confirming.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2 mb-4">
+          <form class="card card-body" id="retrieve-form" novalidate>
+            <h3 class="mb-4">Find a booking</h3>
+            <div class="form-grid">
+              <div class="field"><label for="m-ref">Booking reference</label><input class="input mono" id="m-ref" maxlength="6" placeholder="K7M2QX" style="text-transform:uppercase"></div>
+              <div class="field"><label for="m-last">Last name</label><input class="input" id="m-last" placeholder="Hussam" autocomplete="family-name"></div>
+            </div>
+            <span class="text-sm text-danger mt-2" id="m-err" role="alert" hidden>We couldn't find a booking with that reference and last name.</span>
+            <button class="btn btn-primary mt-4" type="submit"><i data-lucide="search" class="icon-sm"></i>Retrieve booking</button>
+          </form>
+          <div class="card card-body">
+            <h3 class="mb-4">From your account</h3>
+            <div class="stack-sm">
+              <button class="demo-row btn btn-outline w-full" style="justify-content:space-between;height:auto;padding:12px 16px" data-load="K7M2QX">
+                <span class="text-left"><span class="mono fw-600">K7M2QX</span> · CAI → DXB<span class="table-sub">22 Oct 2026 · Checked in</span></span><i data-lucide="chevron-right" class="icon-sm"></i></button>
+              <button class="demo-row btn btn-outline w-full" style="justify-content:space-between;height:auto;padding:12px 16px" data-load="Y8E3RT">
+                <span class="text-left"><span class="mono fw-600">Y8E3RT</span> · CAI → JFK<span class="table-sub">18 Dec 2026 · Confirmed</span></span><i data-lucide="chevron-right" class="icon-sm"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking detail -->
+        <section id="booking" hidden>
+          <div class="alert alert-danger mb-4" id="locked-alert" hidden>
+            <i data-lucide="lock"></i>
+            <div><strong>Changes are no longer available</strong>Online check-in for this flight closed 60 minutes before departure. Please visit an AeroBook counter for help.</div>
+          </div>
+
+          <div class="grid grid-aside">
+            <div class="stack">
+              <div class="card">
+                <div class="card-header">
+                  <div><h3>Booking <span class="mono" id="d-ref">Y8E3RT</span></h3><p id="d-sub">Economy Classic · 1 passenger</p></div>
+                  <span id="d-status"></span>
+                </div>
+                <div class="card-body">
+                  <div class="route" style="max-width:560px">
+                    <div class="pt"><div class="time" id="d-dep">11:00</div><div class="code" id="d-from">CAI · Cairo</div></div>
+                    <div class="path"><span id="d-dur">10h 45m</span><div class="line"></div><span id="d-no" class="mono">AB905</span></div>
+                    <div class="pt end"><div class="time" id="d-arr">16:45</div><div class="code" id="d-to">JFK · New York</div></div>
+                  </div>
+                  <div class="divider"></div>
+                  <dl class="kv" style="max-width:420px">
+                    <dt>Date</dt><dd id="d-date">Fri, 18 Dec 2026</dd>
+                    <dt>Passenger</dt><dd>Jumana Hussam</dd>
+                    <dt>Seat</dt><dd class="mono" id="d-seat">31A</dd>
+                    <dt>Meal</dt><dd id="d-meal">Halal</dd>
+                    <dt>Extras</dt><dd id="d-extras">Extra baggage (1 × 23 kg)</dd>
+                  </dl>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header"><h3>What would you like to do?</h3></div>
+                <div class="card-body grid grid-2" id="actions">
+                  <button class="btn btn-outline btn-lg" style="justify-content:flex-start" data-open-modal="change-modal"><i data-lucide="calendar-clock"></i>Change date or flight</button>
+                  <button class="btn btn-outline btn-lg" style="justify-content:flex-start" data-open-modal="seat-modal"><i data-lucide="armchair"></i>Change seat</button>
+                  <button class="btn btn-outline btn-lg" style="justify-content:flex-start" data-open-modal="meal-modal"><i data-lucide="utensils"></i>Meal & extras</button>
+                  <button class="btn btn-danger-outline btn-lg" style="justify-content:flex-start" data-open-modal="cancel-modal"><i data-lucide="circle-x"></i>Cancel booking</button>
+                </div>
+              </div>
+            </div>
+
+            <aside class="card sticky-aside">
+              <div class="card-header"><h3>Fare rules</h3><span class="badge badge-success">Economy Classic</span></div>
+              <div class="card-body stack-sm text-sm">
+                <div class="flex gap-3"><i data-lucide="calendar-clock" class="icon-sm text-3"></i><div><strong>Changes</strong><p class="text-3">$90 change fee + fare difference</p></div></div>
+                <div class="flex gap-3"><i data-lucide="receipt" class="icon-sm text-3"></i><div><strong>Cancellation</strong><p class="text-3">50% of base fare refunded; taxes refunded in full</p></div></div>
+                <div class="flex gap-3"><i data-lucide="luggage" class="icon-sm text-3"></i><div><strong>Baggage</strong><p class="text-3">1 × 23 kg checked + 7 kg cabin</p></div></div>
+                <div class="flex gap-3"><i data-lucide="clock" class="icon-sm text-3"></i><div><strong>Deadline</strong><p class="text-3">Changes close 60 minutes before departure</p></div></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Change flight -->
+  <dialog class="modal modal-lg" id="change-modal" aria-labelledby="ch-title">
+    <div class="modal-header"><div><h3 id="ch-title">Change date or flight</h3><p>Pick a new flight. We'll show the fare difference and change fee before you confirm.</p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button></div>
+    <div class="modal-body stack">
+      <div class="form-grid"><div class="field"><label for="ch-date">New departure date</label><input class="input" type="date" id="ch-date" value="2026-12-20"></div></div>
+      <div class="stack-sm" role="radiogroup" aria-label="Available flights">
+        <label class="option"><input type="radio" name="newflight" checked><span class="opt-body" style="flex-direction:row;align-items:center;justify-content:space-between"><span><span class="opt-title mono">AB905 · 11:00 → 16:45</span><span class="opt-desc">Sun, 20 Dec · Direct · 10h 45m</span></span><span class="opt-price">+$64 fare difference</span></span></label>
+        <label class="option"><input type="radio" name="newflight"><span class="opt-body" style="flex-direction:row;align-items:center;justify-content:space-between"><span><span class="opt-title mono">AB611 + AB907 · 09:20 → 19:30</span><span class="opt-desc">Sun, 20 Dec · 1 stop CDG (2h 05m) · 17h 10m</span></span><span class="opt-price">−$22 fare difference</span></span></label>
+      </div>
+      <div class="card card-body" style="background:var(--c-surface-2)">
+        <div class="summary-row"><span>Fare difference</span><span class="num">$64.00</span></div>
+        <div class="summary-row"><span>Change fee (Economy Classic)</span><span class="num">$90.00</span></div>
+        <div class="summary-row summary-total"><span>To pay now</span><span class="num">$154.00</span></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" data-close-modal>Keep current flight</button><button class="btn btn-accent" data-close-modal data-toast="Flight changed — $154.00 charged. New e-ticket sent by email.">Confirm & pay $154.00</button></div>
+  </dialog>
+
+  <!-- Change seat -->
+  <dialog class="modal modal-lg" id="seat-modal" aria-labelledby="st-title">
+    <div class="modal-header"><div><h3 id="st-title">Change seat</h3><p>Current seat <span class="mono" id="st-cur">31A</span>. Price differences apply for premium seats.</p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button></div>
+    <div class="modal-body"><div class="seatmap-wrap"><div id="st-legend"></div><div id="st-map"></div></div></div>
+    <div class="modal-footer"><span class="text-sm text-2" style="margin-right:auto" id="st-new">Select a new seat</span><button class="btn btn-outline" data-close-modal>Cancel</button><button class="btn btn-primary" data-close-modal data-toast="Seat updated">Confirm seat</button></div>
+  </dialog>
+
+  <!-- Meal & extras -->
+  <dialog class="modal" id="meal-modal" aria-labelledby="ml-title">
+    <div class="modal-header"><div><h3 id="ml-title">Meal & extras</h3><p>Meal changes are free up to 24 hours before departure.</p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button></div>
+    <div class="modal-body stack">
+      <div class="field"><label for="ml-meal">Meal preference</label><select class="select" id="ml-meal"><option>Standard</option><option>Vegetarian</option><option>Vegan</option><option selected>Halal</option><option>Child meal</option><option>Diabetic</option><option>Gluten-free</option><option>No meal</option></select></div>
+      <label class="check"><input type="checkbox" checked> Extra baggage — 1 × 23 kg <span class="text-3">(already purchased)</span></label>
+      <label class="check"><input type="checkbox"> Priority boarding <span class="text-3">+$15</span></label>
+      <label class="check"><input type="checkbox"> Lounge access <span class="text-3">+$39</span></label>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" data-close-modal>Cancel</button><button class="btn btn-primary" data-close-modal data-toast="Meal & extras updated">Save changes</button></div>
+  </dialog>
+
+  <!-- Cancel -->
+  <dialog class="modal modal-sm" id="cancel-modal" aria-labelledby="cx-title">
+    <div class="modal-header"><div><h3 id="cx-title">Cancel this booking?</h3><p>Refund calculated from your fare rules.</p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" data-close-modal aria-label="Close"><i data-lucide="x"></i></button></div>
+    <div class="modal-body">
+      <div class="summary-row"><span>Amount paid</span><span class="num">$953.00</span></div>
+      <div class="summary-row"><span>Base fare refund (50%)</span><span class="num">$350.50</span></div>
+      <div class="summary-row"><span>Taxes refunded</span><span class="num">$186.00</span></div>
+      <div class="summary-row"><span>Extras (non-refundable)</span><span class="num">$0.00</span></div>
+      <div class="summary-row summary-total"><span>Refund to card ••4242</span><span class="num text-success">$536.50</span></div>
+      <p class="text-xs text-3 mt-4">Refunds are processed within 7–10 business days.</p>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" data-close-modal>Keep booking</button><button class="btn btn-danger" data-close-modal data-toast="Booking cancelled — $536.50 will be refunded" data-toast-type="info">Cancel & refund $536.50</button></div>
+  </dialog>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/seatmap.js"></script>
+  <script src="../js/pages/passenger-manage.js"></script>
+</body>
+</html>

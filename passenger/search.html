@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search Flights · AeroBook</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body data-role="passenger" data-page="search" data-base="../" data-title="Search Flights">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <section class="search-hero">
+          <svg class="hero-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          <h1>Where to next, Jumana?</h1>
+          <p>Search AeroBook and partner flights. Prices include taxes and fees.</p>
+
+          <form class="search-panel" id="search-form" novalidate>
+            <div class="flex flex-wrap gap-3 items-center mb-4">
+              <div class="segmented" role="group" aria-label="Trip type">
+                <button type="button" aria-pressed="false" data-trip="oneway">One way</button>
+                <button type="button" aria-pressed="true" data-trip="return">Return</button>
+              </div>
+              <div class="field" style="flex-direction:row;align-items:center;gap:8px">
+                <label for="s-cabin" class="sr-only">Cabin class</label>
+                <select class="select" id="s-cabin" style="min-width:180px"><option>Economy</option><option>Premium Economy</option><option>Business</option></select>
+              </div>
+            </div>
+
+            <div class="search-grid">
+              <div class="search-route">
+              <div class="field" id="sf-from"><label for="s-from">From</label>
+                <div class="input-icon"><i data-lucide="plane-takeoff"></i><select class="select" id="s-from" style="padding-left:40px"></select></div></div>
+              <button type="button" class="btn btn-outline btn-icon swap-btn" aria-label="Swap origin and destination" id="swap"><i data-lucide="arrow-left-right"></i></button>
+              <div class="field" id="sf-to"><label for="s-to">To</label>
+                <div class="input-icon"><i data-lucide="plane-landing"></i><select class="select" id="s-to" style="padding-left:40px"></select></div>
+                <span class="error-msg"><i data-lucide="circle-alert" class="icon-sm"></i>Origin and destination can't be the same.</span></div>
+              </div>
+              <div class="search-when">
+              <div class="field" id="sf-dep"><label for="s-dep">Departure</label><input class="input" type="date" id="s-dep" value="2026-10-22" min="2026-10-21">
+                <span class="error-msg"><i data-lucide="circle-alert" class="icon-sm"></i>Departure date can't be in the past.</span></div>
+              <div class="field" id="sf-ret"><label for="s-ret">Return <span class="text-3 fw-500">(optional)</span></label><input class="input" type="date" id="s-ret" value="2026-10-29" min="2026-10-21"></div>
+              <div class="field party-popover"><span class="field-label" id="party-lbl">Passengers</span>
+                <button type="button" class="select" style="text-align:left" aria-labelledby="party-lbl" data-dropdown="party-menu" aria-haspopup="true" aria-expanded="false" id="party-btn">1 Adult</button>
+                <div class="dropdown-menu" id="party-menu" hidden>
+                  <div class="counter"><div><div class="fw-500">Adults</div><div class="text-xs text-3">12+ years</div></div>
+                    <div class="counter-ctrl"><button type="button" class="btn btn-outline btn-icon btn-sm" data-step="-1" aria-label="Fewer adults"><i data-lucide="minus" class="icon-sm"></i></button><output data-min="1" data-max="9" id="c-adults" value="1">1</output><button type="button" class="btn btn-outline btn-icon btn-sm" data-step="1" aria-label="More adults"><i data-lucide="plus" class="icon-sm"></i></button></div></div>
+                  <div class="counter"><div><div class="fw-500">Children</div><div class="text-xs text-3">2–11 years</div></div>
+                    <div class="counter-ctrl"><button type="button" class="btn btn-outline btn-icon btn-sm" data-step="-1" aria-label="Fewer children"><i data-lucide="minus" class="icon-sm"></i></button><output data-min="0" data-max="8" id="c-children" value="0">0</output><button type="button" class="btn btn-outline btn-icon btn-sm" data-step="1" aria-label="More children"><i data-lucide="plus" class="icon-sm"></i></button></div></div>
+                  <div class="counter"><div><div class="fw-500">Infants</div><div class="text-xs text-3">Under 2, on lap</div></div>
+                    <div class="counter-ctrl"><button type="button" class="btn btn-outline btn-icon btn-sm" data-step="-1" aria-label="Fewer infants"><i data-lucide="minus" class="icon-sm"></i></button><output data-min="0" data-max="4" id="c-infants" value="0">0</output><button type="button" class="btn btn-outline btn-icon btn-sm" data-step="1" aria-label="More infants"><i data-lucide="plus" class="icon-sm"></i></button></div></div>
+                </div>
+              </div>
+              <button class="btn btn-accent btn-lg" type="submit"><i data-lucide="search" class="icon-sm"></i>Search</button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="section grid grid-sidebar-left" id="results-area">
+          <aside class="card card-body" aria-label="Filter results">
+            <div class="flex justify-between items-center mb-4"><h3>Filters</h3><button class="link-btn text-sm" id="clear-filters">Reset</button></div>
+            <div class="filter-group">
+              <h4>Stops</h4>
+              <label class="check"><input type="checkbox" name="stops" value="0" checked> Direct <span class="price">from $254</span></label>
+              <label class="check"><input type="checkbox" name="stops" value="1" checked> 1 stop <span class="price">from $226</span></label>
+            </div>
+            <div class="filter-group">
+              <h4>Airlines</h4>
+              <label class="check"><input type="checkbox" name="airline" value="AeroBook" checked> AeroBook</label>
+              <label class="check"><input type="checkbox" name="airline" value="Nile Air (partner)" checked> Nile Air (partner)</label>
+            </div>
+            <div class="filter-group">
+              <h4>Departure time</h4>
+              <div class="time-chips">
+                <label class="time-chip"><input type="checkbox" name="tod" value="morning" checked><span><i data-lucide="sunrise" class="icon-sm"></i>Morning<br>05–12</span></label>
+                <label class="time-chip"><input type="checkbox" name="tod" value="afternoon" checked><span><i data-lucide="sun" class="icon-sm"></i>Afternoon<br>12–17</span></label>
+                <label class="time-chip"><input type="checkbox" name="tod" value="evening" checked><span><i data-lucide="sunset" class="icon-sm"></i>Evening<br>17–21</span></label>
+                <label class="time-chip"><input type="checkbox" name="tod" value="night" checked><span><i data-lucide="moon" class="icon-sm"></i>Night<br>21–05</span></label>
+              </div>
+            </div>
+          </aside>
+
+          <div>
+            <div class="flex justify-between items-center flex-wrap gap-3 mb-4">
+              <div>
+                <h2 class="text-lg" id="results-title">Cairo → Dubai</h2>
+                <p class="text-sm text-3" id="results-sub">Thu, 22 Oct · 1 adult · Economy · showing flights with enough seats for your party</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <label for="sort" class="text-sm text-2">Sort by</label>
+                <select class="select" id="sort" style="width:auto;min-width:170px"><option value="price">Lowest price</option><option value="dep">Departure time</option><option value="duration">Shortest duration</option></select>
+              </div>
+            </div>
+            <div class="alert alert-info mb-4" id="connect-note" hidden>
+              <i data-lucide="route"></i>
+              <div><strong>No direct flights on this date</strong>We've suggested connecting flights with at least 60 minutes to change planes.</div>
+            </div>
+            <div class="stack" id="results"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/passenger-search.js"></script>
+</body>
+</html>

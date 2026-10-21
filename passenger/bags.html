@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track Bags · AeroBook</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body data-role="passenger" data-page="bags" data-base="../" data-title="Track Bags">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+        <div class="page-header">
+          <div>
+            <h1>Track your bags</h1>
+            <p>Follow each checked bag from the counter to the arrival belt using its 10-digit tag number.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-aside">
+          <div class="stack">
+            <form class="card card-body" id="track-form" novalidate>
+              <div class="field" id="tag-field">
+                <label for="tag">Bag tag number</label>
+                <div class="flex gap-2">
+                  <div class="input-icon flex-1"><i data-lucide="tag"></i><input class="input mono" id="tag" inputmode="numeric" maxlength="10" placeholder="0157204381" value="0157204381"></div>
+                  <button class="btn btn-primary" type="submit">Track</button>
+                </div>
+                <span class="hint">Printed on the receipt attached to your boarding pass.</span>
+                <span class="error-msg" role="alert"><i data-lucide="circle-alert" class="icon-sm"></i>No bag found with this tag. Check the 10 digits and try again.</span>
+              </div>
+            </form>
+
+            <div class="card" id="result">
+              <div class="card-header">
+                <div><h3>Bag <span class="mono" id="r-tag"></span></h3><p id="r-sub"></p></div>
+                <span id="r-status"></span>
+              </div>
+              <div class="card-body"><ol class="timeline" id="r-timeline"></ol></div>
+            </div>
+          </div>
+
+          <aside class="card sticky-aside">
+            <div class="card-header"><h3>Your bags on K7M2QX</h3></div>
+            <div class="card-body stack-sm" id="my-bags"></div>
+            <div class="card-footer" style="justify-content:flex-start"><button class="btn btn-ghost btn-sm" data-toast="Missing bag report started — reference CAI-AB-58213" data-toast-type="info"><i data-lucide="file-warning" class="icon-sm"></i>Report a missing bag</button></div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/passenger-bags.js"></script>
+</body>
+</html>

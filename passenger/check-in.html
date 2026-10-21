@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Online Check-in · AeroBook</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/seatmap.css">
+  <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body data-role="passenger" data-page="checkin" data-base="../" data-title="Online Check-in">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header no-print">
+          <div>
+            <h1>Online check-in</h1>
+            <p>Check-in opens 48 hours and closes 60 minutes before departure.</p>
+          </div>
+        </div>
+
+        <!-- Eligible trips -->
+        <section class="grid grid-3 no-print" id="trip-list">
+          <article class="card card-body">
+            <div class="flex justify-between items-center"><span class="mono fw-600">AB510 · D3F8KW</span><span class="badge badge-success"><i data-lucide="door-open" class="icon-sm"></i>Open</span></div>
+            <h3 class="mt-2">Cairo → Istanbul</h3>
+            <p class="text-sm text-3">Thu, 22 Oct · 17:45 · No seat yet</p>
+            <div class="window-meter mt-4" aria-label="Check-in window"><span class="open" style="left:0;right:4%"></span><span class="now" style="left:58%"></span></div>
+            <div class="window-labels"><span>Opened 20 Oct 17:45</span><span>Closes 22 Oct 16:45</span></div>
+            <button class="btn btn-primary btn-block mt-4" id="start-checkin">Check in now</button>
+          </article>
+          <article class="card card-body">
+            <div class="flex justify-between items-center"><span class="mono fw-600">AB101 · K7M2QX</span><span class="badge badge-info"><i data-lucide="badge-check" class="icon-sm"></i>Checked in</span></div>
+            <h3 class="mt-2">Cairo → Dubai</h3>
+            <p class="text-sm text-3">Thu, 22 Oct · 08:15 · Seat 14C</p>
+            <div class="window-meter mt-4"><span class="open" style="left:0;right:4%"></span><span class="now" style="left:82%"></span></div>
+            <div class="window-labels"><span>Opened 20 Oct 08:15</span><span>Closes 22 Oct 07:15</span></div>
+            <button class="btn btn-outline btn-block mt-4" id="show-pass"><i data-lucide="qr-code" class="icon-sm"></i>View boarding pass</button>
+          </article>
+          <article class="card card-body">
+            <div class="flex justify-between items-center"><span class="mono fw-600">AB905 · Y8E3RT</span><span class="badge"><i data-lucide="clock" class="icon-sm"></i>Not open yet</span></div>
+            <h3 class="mt-2">Cairo → New York</h3>
+            <p class="text-sm text-3">Fri, 18 Dec · 11:00 · Seat 31A</p>
+            <div class="window-meter mt-4"><span class="now" style="left:0"></span></div>
+            <div class="window-labels"><span>Opens 16 Dec 11:00</span><span>Closes 18 Dec 10:00</span></div>
+            <button class="btn btn-outline btn-block mt-4" disabled>Opens in 56 days</button>
+          </article>
+        </section>
+
+        <!-- Check-in flow -->
+        <section class="section no-print" id="flow" hidden>
+          <ol class="stepper" id="ci-stepper">
+            <li class="current"><button type="button" disabled><span class="n">1</span>Travel documents</button></li>
+            <li><button type="button" disabled><span class="n">2</span>Dangerous goods</button></li>
+            <li><button type="button" disabled><span class="n">3</span>Seat</button></li>
+            <li><button type="button" disabled><span class="n">4</span>Boarding pass</button></li>
+          </ol>
+
+          <div class="card" data-ci="1">
+            <div class="card-header"><div><h3>Confirm your travel documents</h3><p>Make sure these match the passport you will travel with.</p></div></div>
+            <div class="card-body stack">
+              <dl class="kv" style="max-width:480px">
+                <dt>Passenger</dt><dd>JUMANA HUSSAM</dd>
+                <dt>Nationality</dt><dd>Egyptian</dd>
+                <dt>Passport number</dt><dd class="mono">A12345678</dd>
+                <dt>Passport expiry</dt><dd>31 Aug 2030</dd>
+                <dt>Visa / entry permit</dt><dd>e-Visa · Türkiye</dd>
+              </dl>
+              <label class="check"><input type="checkbox" class="ci-req"> I confirm my passport is valid for at least 6 months after travel and I hold any required visa for Türkiye.</label>
+            </div>
+            <div class="card-footer"><button class="btn btn-ghost" data-ci-cancel>Cancel</button><button class="btn btn-primary" data-ci-next disabled>Continue</button></div>
+          </div>
+
+          <div class="card" data-ci="2" hidden>
+            <div class="card-header"><div><h3>Dangerous goods declaration</h3><p>For everyone's safety, these items are not allowed in your baggage.</p></div></div>
+            <div class="card-body stack">
+              <div class="grid grid-4" style="gap:12px">
+                <div class="chip" style="justify-content:center;height:auto;padding:12px"><i data-lucide="flame" class="icon-sm"></i>Flammables</div>
+                <div class="chip" style="justify-content:center;height:auto;padding:12px"><i data-lucide="battery-warning" class="icon-sm"></i>Loose lithium batteries</div>
+                <div class="chip" style="justify-content:center;height:auto;padding:12px"><i data-lucide="flask-conical" class="icon-sm"></i>Corrosives</div>
+                <div class="chip" style="justify-content:center;height:auto;padding:12px"><i data-lucide="bomb" class="icon-sm"></i>Explosives & fireworks</div>
+                <div class="chip" style="justify-content:center;height:auto;padding:12px"><i data-lucide="biohazard" class="icon-sm"></i>Toxic substances</div>
+                <div class="chip" style="justify-content:center;height:auto;padding:12px"><i data-lucide="spray-can" class="icon-sm"></i>Compressed gases</div>
+                <div class="chip" style="justify-content:center;height:auto;padding:12px"><i data-lucide="radiation" class="icon-sm"></i>Radioactive material</div>
+                <div class="chip" style="justify-content:center;height:auto;padding:12px"><i data-lucide="magnet" class="icon-sm"></i>Magnetised material</div>
+              </div>
+              <label class="check"><input type="checkbox" class="ci-req"> I declare that neither I nor my baggage contain any dangerous goods listed above.</label>
+            </div>
+            <div class="card-footer"><button class="btn btn-ghost" data-ci-back>Back</button><button class="btn btn-primary" data-ci-next disabled>Continue</button></div>
+          </div>
+
+          <div class="card" data-ci="3" hidden>
+            <div class="card-header"><div><h3>Choose a seat</h3><p>You didn't pick a seat at booking. Choose a paid seat or get a free one assigned.</p></div><span class="badge badge-primary" id="ci-seat">Not selected</span></div>
+            <div class="card-body"><div class="seatmap-wrap"><div id="ci-legend"></div><div id="ci-map"></div></div></div>
+            <div class="card-footer" style="justify-content:space-between"><button class="btn btn-ghost" data-ci-back>Back</button>
+              <div class="flex gap-2"><button class="btn btn-outline" data-ci-next data-free>Assign me a free seat</button><button class="btn btn-primary" data-ci-next>Confirm seat & check in</button></div></div>
+          </div>
+        </section>
+
+        <!-- Boarding pass -->
+        <section class="section" id="pass" hidden>
+          <div class="alert alert-success mb-4 no-print"><i data-lucide="circle-check"></i><div><strong>You're checked in</strong>Show the mobile code at security and the gate, or print your boarding pass.</div></div>
+          <div class="boarding-pass" id="bp">
+            <div class="bp-main">
+              <div class="bp-head"><span class="brand"><span class="brand-mark"><i data-lucide="plane"></i></span>AeroBook</span><span class="text-sm">BOARDING PASS · ECONOMY</span></div>
+              <div class="bp-body">
+                <div class="bp-route">
+                  <div><div class="code" id="bp-from">CAI</div><div class="city" id="bp-from-city">Cairo</div></div>
+                  <div class="mid"><hr><i data-lucide="plane"></i><hr></div>
+                  <div class="text-right"><div class="code" id="bp-to">IST</div><div class="city" id="bp-to-city">Istanbul</div></div>
+                </div>
+                <div class="bp-fields">
+                  <div><div class="lbl">Passenger</div><div class="val" style="font-family:var(--font-sans)">HUSSAM/JUMANA</div></div>
+                  <div><div class="lbl">Flight</div><div class="val" id="bp-no">AB510</div></div>
+                  <div><div class="lbl">Date</div><div class="val" id="bp-date">22 OCT</div></div>
+                  <div><div class="lbl">Seat</div><div class="val" id="bp-seat">17C</div></div>
+                  <div><div class="lbl">Gate</div><div class="val" id="bp-gate">D9</div></div>
+                  <div><div class="lbl">Boarding</div><div class="val" id="bp-board">17:05</div></div>
+                  <div><div class="lbl">Group</div><div class="val">3</div></div>
+                  <div><div class="lbl">Ref</div><div class="val" id="bp-ref">D3F8KW</div></div>
+                </div>
+              </div>
+              <div class="bp-barcode" id="bp-barcode"></div>
+            </div>
+            <div class="bp-stub">
+              <div class="qr" id="bp-qr"></div>
+              <div class="text-xs text-3 text-center">Scan at security & gate<br>Gate closes 20 min before departure</div>
+            </div>
+          </div>
+          <div class="flex gap-2 flex-wrap mt-4 no-print">
+            <button class="btn btn-primary" data-print><i data-lucide="printer" class="icon-sm"></i>Print / save as PDF</button>
+            <button class="btn btn-outline" data-toast="Boarding pass added to your phone wallet"><i data-lucide="smartphone" class="icon-sm"></i>Add to mobile wallet</button>
+            <button class="btn btn-outline" data-toast="Boarding pass sent to passenger@aerobook.com"><i data-lucide="mail" class="icon-sm"></i>Email it to me</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/seatmap.js"></script>
+  <script src="../js/pages/passenger-checkin.js"></script>
+</body>
+</html>

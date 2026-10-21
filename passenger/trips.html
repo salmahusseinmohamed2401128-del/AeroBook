@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Trips · AeroBook</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body data-role="passenger" data-page="trips" data-base="../" data-title="My Trips">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+      <main id="main" class="content">
+
+        <div class="page-header">
+          <div>
+            <h1>My trips</h1>
+            <p>Your upcoming and past journeys, newest first. Travel history is kept for at least 5 years.</p>
+          </div>
+          <a class="btn btn-accent" href="search.html"><i data-lucide="plus" class="icon-sm"></i>Book a new trip</a>
+        </div>
+
+        <div class="tabs mb-4" role="tablist" aria-label="Trips">
+          <button class="tab" role="tab" aria-selected="true" aria-controls="tp-up" id="tt-up">Upcoming <span class="badge" id="n-up">0</span></button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tp-past" id="tt-past" tabindex="-1">Past & cancelled <span class="badge" id="n-past">0</span></button>
+        </div>
+        <div role="tabpanel" id="tp-up" aria-labelledby="tt-up" class="stack"></div>
+        <div role="tabpanel" id="tp-past" aria-labelledby="tt-past" class="stack" hidden></div>
+        <p class="text-xs text-3 mt-6 text-center"><i data-lucide="archive" class="icon-sm" style="display:inline;vertical-align:-3px"></i> Showing trips since Oct 2021 · records older than 5 years are archived on request.</p>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shell.js"></script>
+  <script src="../js/pages/passenger-trips.js"></script>
+</body>
+</html>
