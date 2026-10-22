@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flight Status · AeroBook</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/booking.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="public-header">
+    <a class="brand" href="index.html"><span class="brand-mark"><i data-lucide="plane"></i></span><span>AeroBook<small>Flight status</small></span></a>
+    <div class="flex gap-2">
+      <button class="btn btn-ghost btn-icon" style="color:#fff" aria-label="Toggle dark mode" id="theme-btn"><i data-lucide="moon"></i></button>
+      <a class="btn btn-accent" href="index.html"><i data-lucide="log-in" class="icon-sm"></i>Sign in</a>
+    </div>
+  </header>
+
+  <main id="main" class="content">
+    <div class="page-header">
+      <div>
+        <h1>Live flight status</h1>
+        <p>Departures and arrivals updated in real time by our airport teams. Last updated <span class="mono">21 Oct 2026 · 14:32</span>.</p>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="filter-bar" style="border:0">
+        <div class="field"><label for="q">Flight number or city</label>
+          <div class="input-icon"><i data-lucide="search"></i><input class="input" id="q" placeholder="e.g. AB205 or London"></div></div>
+        <div class="field narrow"><label for="day">Date</label>
+          <select class="select" id="day"><option>Yesterday · 21 Oct</option><option selected>Today · 22 Oct</option><option>Tomorrow · 23 Oct</option></select></div>
+        <div class="field narrow"><label for="dir">Direction</label>
+          <select class="select" id="dir"><option value="">All flights</option><option value="dep">Departures from CAI</option><option value="arr">Arrivals to CAI</option></select></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="table-wrap">
+        <table class="table" aria-label="Flight status board">
+          <thead><tr><th>Flight</th><th>Route</th><th>Scheduled</th><th>Estimated</th><th>Gate</th><th>Status</th></tr></thead>
+          <tbody id="board"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="grid grid-2">
+        <div class="card card-body">
+          <div class="flex items-center gap-3 mb-4"><span class="stat-icon"><i data-lucide="luggage"></i></span><div><h3>Track a bag</h3><p class="text-sm text-3">Enter the 10-digit number on your bag tag receipt.</p></div></div>
+          <form class="flex gap-2" action="passenger/bags.html">
+            <label class="sr-only" for="tag">Bag tag number</label>
+            <input class="input mono" id="tag" name="tag" inputmode="numeric" maxlength="10" placeholder="0157204381">
+            <a class="btn btn-primary" href="index.html">Track</a>
+          </form>
+        </div>
+        <div class="card card-body">
+          <div class="flex items-center gap-3 mb-4"><span class="stat-icon"><i data-lucide="bell-ring"></i></span><div><h3>Get status alerts</h3><p class="text-sm text-3">Sign in to receive email, SMS or push alerts within 2 minutes of any change.</p></div></div>
+          <a class="btn btn-outline" href="index.html">Sign in to subscribe</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/pages/flight-status-public.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in · AeroBook</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <a class="skip-link" href="#auth-panel">Skip to sign in</a>
+
+  <div class="auth">
+    <!-- Brand / visual side -->
+    <section class="auth-visual" aria-hidden="false">
+      <svg class="flight-path" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+        <path d="M-20 520 C 160 380, 260 420, 360 260 S 560 80, 640 40" stroke="#93C5FD" stroke-width="2" stroke-dasharray="6 10"/>
+        <circle cx="360" cy="260" r="5" fill="#FDBA74"/>
+      </svg>
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><i data-lucide="plane"></i></span>
+        <span>AeroBook<small>Fly smarter</small></span>
+      </a>
+      <div style="position:relative">
+        <h1>Every journey, one booking away.</h1>
+        <p>Search, book and manage flights, check in online and follow your bags in real time — all in one place.</p>
+      </div>
+      <div class="auth-features">
+        <div class="auth-feature"><i data-lucide="armchair"></i><strong>Pick your seat</strong><span>Interactive seat maps</span></div>
+        <div class="auth-feature"><i data-lucide="smartphone"></i><strong>Mobile boarding</strong><span>Check in 48h before</span></div>
+        <div class="auth-feature"><i data-lucide="luggage"></i><strong>Bag tracking</strong><span>Live status by tag</span></div>
+      </div>
+    </section>
+
+    <!-- Form side -->
+    <main class="auth-panel" id="auth-panel">
+
+      <!-- SIGN IN -->
+      <div class="auth-card" id="view-login">
+        <h2>Welcome back</h2>
+        <p>Sign in to manage your trips or access your workspace.</p>
+
+        <div class="alert alert-danger mt-4" id="lock-alert" role="alert" hidden>
+          <i data-lucide="lock"></i>
+          <div><strong>Account temporarily locked</strong>Too many failed attempts. Try again in <span class="mono" id="lock-countdown">15:00</span>.
+            <button type="button" class="link-btn" id="demo-unlock">Reset demo lock</button></div>
+        </div>
+
+        <form id="login-form" class="stack" novalidate>
+          <div class="field" id="f-email">
+            <label for="email">Email or phone</label>
+            <div class="input-icon"><i data-lucide="mail"></i>
+              <input class="input" id="email" type="text" autocomplete="username" placeholder="you@example.com" required></div>
+          </div>
+          <div class="field" id="f-password">
+            <div class="flex justify-between items-center">
+              <label for="password">Password</label>
+              <button type="button" class="link-btn text-sm" data-view="forgot">Forgot password?</button>
+            </div>
+            <div class="input-icon"><i data-lucide="lock"></i>
+              <input class="input" id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+              <button type="button" class="btn btn-ghost btn-icon btn-sm input-action" aria-label="Show password" data-toggle-pw="password"><i data-lucide="eye"></i></button>
+            </div>
+            <span class="error-msg" id="login-error"><i data-lucide="circle-alert" class="icon-sm"></i><span></span></span>
+          </div>
+          <label class="check"><input type="checkbox" checked> Keep me signed in on this device</label>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Sign in</button>
+        </form>
+
+        <p class="auth-foot">New to AeroBook? <button type="button" class="link-btn" data-view="register">Create a passenger account</button></p>
+        <p class="auth-foot" style="margin-top:8px"><a href="flight-status.html"><i data-lucide="radar" class="icon-sm" style="display:inline;vertical-align:-3px"></i> Check public flight status</a></p>
+
+      </div>
+
+      <!-- REGISTER -->
+      <div class="auth-card" id="view-register" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" data-view="login"><i data-lucide="arrow-left" class="icon-sm"></i>Back to sign in</button>
+        <h2 class="mt-4">Create your account</h2>
+        <p>Register with your email or phone. We'll send a one-time code to verify it.</p>
+
+        <form id="register-form" class="stack" novalidate>
+          <div class="segmented" role="group" aria-label="Register with">
+            <button type="button" aria-pressed="true" data-reg="email"><i data-lucide="mail" class="icon-sm"></i>Email</button>
+            <button type="button" aria-pressed="false" data-reg="phone"><i data-lucide="phone" class="icon-sm"></i>Phone</button>
+          </div>
+          <div class="form-grid">
+            <div class="field"><label for="r-first">First name <span class="req">*</span></label><input class="input" id="r-first" autocomplete="given-name"></div>
+            <div class="field"><label for="r-last">Last name <span class="req">*</span></label><input class="input" id="r-last" autocomplete="family-name"></div>
+          </div>
+          <div class="field" id="reg-email-field"><label for="r-email">Email <span class="req">*</span></label><input class="input" id="r-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+          <div class="field" id="reg-phone-field" hidden><label for="r-phone">Mobile number <span class="req">*</span></label><input class="input" id="r-phone" type="tel" autocomplete="tel" placeholder="+20 100 000 0000"></div>
+          <div class="field"><label for="r-pw">Password <span class="req">*</span></label><input class="input" id="r-pw" type="password" autocomplete="new-password"><span class="hint">At least 8 characters, including a number and a symbol.</span></div>
+          <label class="check"><input type="checkbox"> I agree to the Terms of Carriage and Privacy Policy</label>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Send verification code</button>
+        </form>
+      </div>
+
+      <!-- OTP -->
+      <div class="auth-card" id="view-otp" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" data-view="register"><i data-lucide="arrow-left" class="icon-sm"></i>Back</button>
+        <h2 class="mt-4">Verify it's you</h2>
+        <p>Enter the 6-digit code we sent to <strong id="otp-target">you@example.com</strong>. The code expires in 10 minutes.</p>
+        <form id="otp-form" class="stack" novalidate>
+          <div class="otp" role="group" aria-label="One-time code">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 1" autocomplete="one-time-code">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 2">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 3">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 4">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 5">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 6">
+          </div>
+          <p class="text-sm text-3">Demo code: <span class="mono">482915</span></p>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Verify & create account</button>
+          <p class="text-sm text-center text-2">Didn't get it? <button type="button" class="link-btn" data-toast="A new code has been sent">Resend code</button> in <span class="mono">0:45</span></p>
+        </form>
+      </div>
+
+      <!-- FORGOT PASSWORD -->
+      <div class="auth-card" id="view-forgot" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" data-view="login"><i data-lucide="arrow-left" class="icon-sm"></i>Back to sign in</button>
+        <h2 class="mt-4">Reset your password</h2>
+        <p>Enter the email on your account and we'll send you a secure reset link.</p>
+        <form id="forgot-form" class="stack" novalidate>
+          <div class="field"><label for="f-email-in">Email</label><input class="input" id="f-email-in" type="email" autocomplete="email" placeholder="you@example.com"></div>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Send reset link</button>
+        </form>
+        <div class="alert alert-success mt-6" id="forgot-sent" hidden>
+          <i data-lucide="mail-check"></i>
+          <div><strong>Check your inbox</strong>We've sent a reset link to <span id="forgot-target"></span>. For your security the link is valid for <strong style="display:inline">30 minutes</strong>.
+            <div class="mt-2"><button type="button" class="link-btn" data-view="reset">Open reset link (demo)</button></div></div>
+        </div>
+      </div>
+
+      <!-- SET NEW PASSWORD -->
+      <div class="auth-card" id="view-reset" hidden>
+        <h2>Choose a new password</h2>
+        <p>This link expires in <span class="mono fw-600">29:41</span>.</p>
+        <form id="reset-form" class="stack" novalidate>
+          <div class="field"><label for="n-pw">New password</label><input class="input" id="n-pw" type="password" autocomplete="new-password"></div>
+          <div class="field"><label for="n-pw2">Confirm password</label><input class="input" id="n-pw2" type="password" autocomplete="new-password"></div>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Save new password</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pages/login.js"></script>
+</body>
+</html>
