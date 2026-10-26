@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Auth — login, register, password reset
+   ========================================================================== */
+
+.auth { display: grid; grid-template-columns: 1.1fr 1fr; min-height: 100dvh; }
+
+.auth-visual {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: var(--s-10);
+  color: #fff;
+  background:
+    radial-gradient(800px 500px at 90% 10%, rgba(59, 130, 246, .5), transparent 60%),
+    radial-gradient(600px 400px at 0% 100%, rgba(234, 88, 12, .25), transparent 60%),
+    linear-gradient(160deg, #0B1B3F 0%, #1E3A8A 100%);
+}
+.auth-visual .brand { padding: 0; }
+.auth-visual h1 { color: #fff; font-size: var(--fs-3xl); max-width: 14ch; }
+.auth-visual p { color: #C7D2FE; max-width: 46ch; margin-top: var(--s-4); }
+.auth-visual .flight-path { position: absolute; inset: 0; opacity: .35; pointer-events: none; }
+.auth-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); position: relative; }
+.auth-feature { padding: var(--s-4); border-radius: var(--radius-lg); background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); }
+.auth-feature [data-lucide], .auth-feature svg { color: #FDBA74; margin-bottom: var(--s-2); }
+.auth-feature strong { display: block; font-size: var(--fs-sm); }
+.auth-feature span { font-size: var(--fs-xs); color: #C7D2FE; }
+
+.auth-panel { display: flex; flex-direction: column; justify-content: center; padding: var(--s-10) var(--s-8); background: var(--c-surface); }
+.auth-card { width: 100%; max-width: 440px; margin: 0 auto; }
+.auth-card h2 { font-size: var(--fs-2xl); }
+.auth-card > p { color: var(--c-text-2); margin-top: var(--s-2); }
+.auth-card form { margin-top: var(--s-6); }
+
+.auth-foot { margin-top: var(--s-6); font-size: var(--fs-sm); color: var(--c-text-2); text-align: center; }
+
+@media (max-width: 1024px) {
+  .auth { grid-template-columns: 1fr; }
+  .auth-visual { padding: var(--s-6); min-height: auto; }
+  .auth-visual h1 { font-size: var(--fs-2xl); }
+  .auth-features { display: none; }
+  .auth-panel { padding: var(--s-8) var(--s-4); }
+}

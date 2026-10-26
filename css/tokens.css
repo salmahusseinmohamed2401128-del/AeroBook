@@ -1,0 +1,162 @@
+/* ==========================================================================
+   AeroBook — Design tokens
+   Style: Minimalism / Swiss · Palette: navy + booking orange
+   Fonts: Fira Sans (UI) + Fira Code (codes, numbers, references)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Typography */
+  --font-sans: 'Fira Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --fs-xs: 0.75rem;   /* 12 */
+  --fs-sm: 0.875rem;  /* 14 */
+  --fs-md: 1rem;      /* 16 */
+  --fs-lg: 1.125rem;  /* 18 */
+  --fs-xl: 1.5rem;    /* 24 */
+  --fs-2xl: 2rem;     /* 32 */
+  --fs-3xl: 2.5rem;   /* 40 */
+
+  /* Surfaces & text */
+  --c-bg: #F4F7FB;
+  --c-surface: #FFFFFF;
+  --c-surface-2: #F8FAFC;
+  --c-muted: #E9EEF5;
+  --c-text: #0F172A;
+  --c-text-2: #475569;
+  --c-text-3: #64748B;
+  --c-border: #E2E8F0;
+  --c-border-strong: #CBD5E1;
+
+  /* Brand */
+  --c-primary: #1E3A8A;
+  --c-primary-hover: #1E40AF;
+  --c-primary-soft: #E0E9FF;
+  --c-on-primary: #FFFFFF;
+  --c-link: #1D4ED8;
+  --c-secondary: #3B82F6;
+  --c-accent: #EA580C;
+  --c-accent-hover: #C2410C;
+  --c-accent-soft: #FFEDD5;
+  --c-ring: #3B82F6;
+
+  /* Status */
+  --c-success: #15803D;
+  --c-success-soft: #DCFCE7;
+  --c-warning: #B45309;
+  --c-warning-soft: #FEF3C7;
+  --c-danger: #DC2626;
+  --c-danger-hover: #B91C1C;
+  --c-danger-soft: #FEE2E2;
+  --c-info: #0369A1;
+  --c-info-soft: #E0F2FE;
+
+  /* Sidebar */
+  --c-sidebar: #0B1B3F;
+  --c-sidebar-2: #132A5C;
+  --c-sidebar-text: #C7D2FE;
+  --c-sidebar-muted: #8EA0CC;
+
+  /* Seat map */
+  --c-seat-available: #FFFFFF;
+  --c-seat-occupied: #CBD5E1;
+  --c-seat-premium: #FFEDD5;
+  --c-seat-business: #E0E9FF;
+  --c-seat-selected: #1E3A8A;
+
+  /* Chart */
+  --c-chart-1: #2563EB;
+  --c-chart-grid: #E2E8F0;
+
+  /* Spacing (4pt scale) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+
+  /* Shape & elevation */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 24px 48px rgba(15, 23, 42, 0.2);
+
+  /* Motion */
+  --dur-fast: 150ms;
+  --dur: 220ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Layers */
+  --z-sticky: 20;
+  --z-sidebar: 30;
+  --z-dropdown: 40;
+  --z-modal: 100;
+  --z-toast: 1000;
+
+  /* Layout */
+  --sidebar-w: 264px;
+  --topbar-h: 64px;
+  --content-max: 1320px;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --c-bg: #0B1220;
+  --c-surface: #111A2E;
+  --c-surface-2: #0F1729;
+  --c-muted: #1C2843;
+  --c-text: #E2E8F0;
+  --c-text-2: #A5B4CB;
+  --c-text-3: #8796B0;
+  --c-border: #24324F;
+  --c-border-strong: #334566;
+
+  --c-primary: #2563EB;
+  --c-primary-hover: #1D4ED8;
+  --c-primary-soft: rgba(59, 130, 246, 0.16);
+  --c-link: #93C5FD;
+  --c-accent: #EA580C;
+  --c-accent-hover: #F97316;
+  --c-accent-soft: rgba(234, 88, 12, 0.18);
+  --c-ring: #60A5FA;
+
+  --c-success: #4ADE80;
+  --c-success-soft: rgba(34, 197, 94, 0.15);
+  --c-warning: #FBBF24;
+  --c-warning-soft: rgba(245, 158, 11, 0.15);
+  --c-danger: #F87171;
+  --c-danger-hover: #EF4444;
+  --c-danger-soft: rgba(239, 68, 68, 0.15);
+  --c-info: #38BDF8;
+  --c-info-soft: rgba(14, 165, 233, 0.15);
+
+  --c-sidebar: #070E1F;
+  --c-sidebar-2: #12203F;
+
+  --c-seat-available: #16213A;
+  --c-seat-occupied: #2A3756;
+  --c-seat-premium: rgba(234, 88, 12, 0.22);
+  --c-seat-business: rgba(59, 130, 246, 0.22);
+  --c-seat-selected: #2563EB;
+
+  --c-chart-1: #60A5FA;
+  --c-chart-grid: #24324F;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.55);
+
+  color-scheme: dark;
+}
